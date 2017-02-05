@@ -16,7 +16,10 @@ app.use(compress())
 app.use(logger())
 
 if (__DEV__) {
-  require('./dev').default(app)
+  require('./dev').default(app, {
+    bundleUpdated() {},
+    templateUpdated() {}
+  })
 } else {
   app.use(serve('dist'))
 }

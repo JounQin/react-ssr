@@ -13,7 +13,7 @@ export default (compiler, middleware) => {
         ctx.body = content
       },
       setHeader() {
-        ctx.set.apply(ctx, arguments)
+        ctx.set(...arguments)
       }
     })
 

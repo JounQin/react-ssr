@@ -4,7 +4,8 @@ export default function applyExpressMiddleware(fn, req, res) {
 
   return new Promise((resolve, reject) => {
     res.end = function () {
-      originalEnd.apply(this, arguments)
+      Reflect.apply(originalEnd, this, arguments)
+      // originalEnd.apply(this, arguments)
       resolve(false)
     }
     fn(req, res, () => {

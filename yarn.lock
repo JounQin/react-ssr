@@ -1474,6 +1474,10 @@ dom-converter@~0.1:
   dependencies:
     utila "~0.3"
 
+dom-helpers@^3.0.0:
+  version "3.2.1"
+  resolved "http://registry.npm.taobao.org/dom-helpers/download/dom-helpers-3.2.1.tgz#3203e07fed217bd1f424b019735582fc37b2825a"
+
 dom-serializer@0:
   version "0.1.0"
   resolved "http://registry.npm.taobao.org/dom-serializer/download/dom-serializer-0.1.0.tgz#073c697546ce0780ce23be4a28e293e40bc30c82"
@@ -2755,7 +2759,7 @@ media-typer@0.3.0:
   version "0.3.0"
   resolved "http://registry.npm.taobao.org/media-typer/download/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
 
-memory-fs@^0.4.0, memory-fs@~0.4.1:
+memory-fs@^0.4.0, memory-fs@^0.4.1, memory-fs@~0.4.1:
   version "0.4.1"
   resolved "http://registry.npm.taobao.org/memory-fs/download/memory-fs-0.4.1.tgz#3a9a20b8462523e447cfbc7e8bb80ed667bfc552"
   dependencies:
@@ -3402,6 +3406,13 @@ react-router-redux@^4.0.7:
   version "4.0.7"
   resolved "http://registry.npm.taobao.org/react-router-redux/download/react-router-redux-4.0.7.tgz#9b1fde4e70106c50f47214e12bdd888cfb96e2a6"
 
+react-router-scroll@^0.4.1:
+  version "0.4.1"
+  resolved "http://registry.npm.taobao.org/react-router-scroll/download/react-router-scroll-0.4.1.tgz#8cafd348d34e54b1127ec0fb7f8323d0d4c489e0"
+  dependencies:
+    scroll-behavior "^0.9.1"
+    warning "^3.0.0"
+
 react-router@^3.0.2:
   version "3.0.2"
   resolved "http://registry.npm.taobao.org/react-router/download/react-router-3.0.2.tgz#5a19156678810e01d81901f9c0fef63284b8a514"
@@ -3674,6 +3685,13 @@ rx-lite@^3.1.2:
 sax@0.5.x:
   version "0.5.8"
   resolved "http://registry.npm.taobao.org/sax/download/sax-0.5.8.tgz#d472db228eb331c2506b0e8c15524adb939d12c1"
+
+scroll-behavior@^0.9.1:
+  version "0.9.2"
+  resolved "http://registry.npm.taobao.org/scroll-behavior/download/scroll-behavior-0.9.2.tgz#5c04648b1bd8bb14306410a97de3948c72ee1618"
+  dependencies:
+    dom-helpers "^3.0.0"
+    invariant "^2.2.1"
 
 "semver@2 || 3 || 4 || 5", semver@~5.3.0:
   version "5.3.0"
