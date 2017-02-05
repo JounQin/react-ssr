@@ -1,9 +1,22 @@
 import React from 'react'
-import {Route, IndexRoute} from 'react-router'
 
 import App from 'App'
-import {Home} from 'components'
 
-export default <Route path="/" component={App}>
-  <IndexRoute component={Home}/>
-</Route>
+const resolve = (module, callback, route) =>
+  module.then(({default: component}) => callback(null, route ? {component} : component))
+
+export default {
+  path: '/',
+  component: App,
+  getIndexRoute(partialNextState, callback) {
+    resolve(System.import('components/Home'), callback, true)
+  },
+  childRoutes: [
+    {
+      path: 'test',
+      getComponent(nextState, callback) {
+        resolve(System.import('components/Test'), callback)
+      }
+    }
+  ]
+}
