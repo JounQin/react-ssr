@@ -36,4 +36,3 @@ if (module.hot) {
     renderApp()
   })
 }
-
