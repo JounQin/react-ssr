@@ -1,21 +1,14 @@
 import React from 'react'
 import {render} from 'react-dom'
-import {createStore, combineReducers} from 'redux'
 import {Provider} from 'react-redux'
-import {Router, browserHistory, applyRouterMiddleware} from 'react-router'
-import {syncHistoryWithStore, routerReducer} from 'react-router-redux'
+import {syncHistoryWithStore} from 'react-router-redux'
+import {Router, applyRouterMiddleware, browserHistory} from 'react-router'
 import {useScroll} from 'react-router-scroll'
 import {AppContainer} from 'react-hot-loader'
 
-import reducers from 'store/reducers'
-import routes from 'routes'
+import {configureStore, routes} from './entry'
 
-const store = createStore(
-  combineReducers({
-    ...reducers,
-    routing: routerReducer
-  })
-)
+const store = configureStore(browserHistory, window.__initialState__)
 
 const history = syncHistoryWithStore(browserHistory, store)
 
