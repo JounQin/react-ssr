@@ -6,13 +6,6 @@ import logger from 'koa-logger'
 import serve from 'koa-static'
 import _debug from 'debug'
 
-import React from 'react'
-import {renderToString} from 'react-dom/server'
-import {Provider} from 'react-redux'
-import {createMemoryHistory, match, RouterContext} from 'react-router'
-import {syncHistoryWithStore} from 'react-router-redux'
-import serialize from 'serialize-javascript'
-
 import config, {globals, paths} from '../build/config'
 
 import intercept from './intercept'
@@ -23,9 +16,6 @@ const debug = _debug('hi:server')
 
 const app = new Koa()
 
-const flag = true
-
-if (!flag) app.use(require('./history').default())
 app.use(compress())
 app.use(logger())
 
@@ -55,54 +45,35 @@ function parseTemplate(template, contentPlaceholder = '<div id="app">') {
   }
 }
 
-let configureStore, routes, template
+let bundle, template
 
-if (flag) {
-  app.use(async(ctx, next) => {
-    const {req, res} = ctx
+app.use(async(ctx, next) => {
+  const {req, res} = ctx
 
-    if (flag && (!routes || !configureStore)) return res.end('waiting for compilation... refresh in a moment.')
+  if (!bundle || !template) return res.end('waiting for compilation... refresh in a moment.')
 
-    if (intercept(ctx)) return await next()
+  if (intercept(ctx)) return await next()
 
-    const memoryHistory = createMemoryHistory(req.url)
-    const store = configureStore(memoryHistory)
-    const history = syncHistoryWithStore(memoryHistory, store)
-
-    match({history, routes, location: req.url}, (error, redirectLocation, renderProps) => {
-      if (error) {
-        ctx.status = 500
-        res.end(error.message)
-      } else if (redirectLocation) {
-        res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-      } else if (renderProps) {
-        let content = template.head + template.neck
-
-        content += `<div id="app">${renderToString(
-          <Provider store={store}>
-            <RouterContext {...renderProps}/>
-          </Provider>
-        )}</div>`
-
-        content += `<script>window.__initialState__=${serialize(store.getState())};</script>` + template.tail
-
-        ctx.status = 200
-        res.end(content)
-      }
-    })
-  })
-}
+  try {
+    const {status, content} = await bundle.default(req.url, parseTemplate(template))
+    ctx.status = status
+    res[status === 302 ? 'redirect' : 'end'](content)
+    res.end(content)
+  } catch (e) {
+    ctx.status = 500
+    res.end('internal server error')
+    console.error(e)
+  }
+})
 
 if (__DEV__) {
   require('./dev').default(app, {
-    bundleUpdated() {},
-    templateUpdated() {}
+    bundleUpdated: bund => (bundle = bund),
+    templateUpdated: temp => (template = temp)
   })
 } else {
-  const bundle = require(paths.dist('server-bundle.js'))
-  template = parseTemplate(fs.readFileSync(paths.dist('index.html')).toString())
-  configureStore = bundle.configureStore
-  routes = bundle.routes
+  bundle = require(paths.dist('server-bundle.js'))
+  template = fs.readFileSync(paths.dist('index.html'), 'utf-8')
   app.use(serve('dist'))
 }
 

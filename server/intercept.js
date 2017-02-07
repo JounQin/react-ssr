@@ -1,3 +1,8 @@
+const getLogger = ({logger, verbose}) => logger || (verbose ? console.log.bind(console) : function () {})
+
+const acceptsHtml = (header, {htmlAcceptHeaders = ['text/html', '*/*']}) =>
+  !!htmlAcceptHeaders.find(acceptHeader => header.indexOf(acceptHeader) + 1)
+
 export default ({headers, method, url}, options = {}) => {
   const logger = getLogger(options)
 
@@ -54,7 +59,3 @@ export default ({headers, method, url}, options = {}) => {
   }
 }
 
-const acceptsHtml = (header, {htmlAcceptHeaders = ['text/html', '*/*']}) =>
-  !!htmlAcceptHeaders.find(acceptHeader => header.indexOf(acceptHeader) + 1)
-
-const getLogger = ({logger, verbose}) => logger || (verbose ? console.log.bind(console) : function () {})
