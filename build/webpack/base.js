@@ -7,7 +7,9 @@ const {__PROD__} = globals
 const PACKAGES = paths.base('packages')
 const NODE_MODULES = 'node_modules'
 
-const {devTool, minimize} = config
+const {browsers, devTool, minimize} = config
+
+const sourceMap = !!devTool
 
 export const prodEmpty = str => __PROD__ ? '' : str
 
@@ -18,7 +20,42 @@ const urlLoader = `url-loader?${JSON.stringify({
   name: `${prodEmpty('[name].')}[hash].[ext]`
 })}`
 
-const nodeModules = /\bnode_modules\b/
+const cssMinimize = minimize && {
+  autoprefixer: {
+    add: true,
+    remove: true,
+    browsers
+  },
+  discardComments: {
+    removeAll: true
+  },
+  safe: true,
+  sourcemap: sourceMap
+}
+
+const cssOptions = {
+  minimize,
+  sourceMap,
+  ...cssMinimize
+}
+
+export const STYLE_LOADER = 'style-loader'
+
+export const CSS_LOADER = 'css-loader?' + JSON.stringify(cssOptions)
+export const localIdentName = __PROD__ ? '[hash:base64]' : '[name]__[local]___[hash:base64:5]'
+
+const cssModuleOptions = {
+  modules: true,
+  camelCase: true,
+  importLoaders: 2,
+  localIdentName
+}
+
+export const CSS_MODULE_LOADER = 'css-loader?' + JSON.stringify(Object.assign({}, cssOptions, cssModuleOptions))
+
+export const nodeModules = /\bnode_modules\b/
+
+export const STYLUS_LOADER = 'stylus-loader?paths=node_modules/bootstrap-styl/'
 
 export default {
   resolve: {
@@ -40,6 +77,11 @@ export default {
   devtool: devTool,
   module: {
     rules: [
+      {
+        test: /^(?!.*[/\\](app|bootstrap|theme-\w+)\.styl$).*\.styl$/,
+        loader: [STYLE_LOADER, CSS_MODULE_LOADER, STYLUS_LOADER],
+        exclude: nodeModules
+      },
       {
         test: /\.js$/,
         loader: 'babel-loader',

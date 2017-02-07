@@ -7,9 +7,9 @@ import _debug from 'debug'
 
 import config, {globals, paths, pkg, vendors} from '../config'
 
-import base from './base'
+import base, {CSS_LOADER, nodeModules, STYLE_LOADER, STYLUS_LOADER} from './base'
 
-const {browsers, devTool, minimize} = config
+const {devTool, minimize} = config
 
 const sourceMap = !!devTool
 
@@ -19,31 +19,15 @@ const debug = _debug('hi:webpack:client')
 
 debug(`create webpack configuration for NODE_ENV:${NODE_ENV}`)
 
-const cssMinimize = minimize && {
-  autoprefixer: {
-    add: true,
-    remove: true,
-    browsers
-  },
-  discardComments: {
-    removeAll: true
-  },
-  safe: true,
-  sourcemap: sourceMap
-}
-
-const STYLUS_LOADER = 'stylus-loader?paths=node_modules/bootstrap-styl/'
-
+let appLoader
 let bootstrapLoader
 
-const sourceLoaders = [{
-  loader: 'css-loader',
-  options: {
-    minimize,
-    sourceMap,
-    ...cssMinimize
-  }
-}, STYLUS_LOADER]
+const sourceLoaders = [CSS_LOADER, STYLUS_LOADER]
+
+const loaderUtil = plugin => plugin && minimize ? plugin.extract({
+  fallback: STYLE_LOADER,
+  use: sourceLoaders
+}) : [STYLE_LOADER, ...sourceLoaders]
 
 const clientConfig = {
   ...base,
@@ -56,12 +40,19 @@ const clientConfig = {
     rules: [
       ...base.module.rules,
       {
-        test: /\.styl$/,
-        use: minimize ?
-          (bootstrapLoader = new ExtractTextPlugin('bootstrap.[contenthash].css')).extract({
-            fallback: 'style-loader',
-            use: sourceLoaders
-          }) : ['style-loader', ...sourceLoaders]
+        test: /[/\\]app\.styl$/,
+        use: loaderUtil((appLoader = new ExtractTextPlugin('app.[contenthash].css'))),
+        exclude: nodeModules
+      },
+      {
+        test: /[/\\]bootstrap\.styl$/,
+        use: loaderUtil((bootstrapLoader = new ExtractTextPlugin('bootstrap.[contenthash].css'))),
+        exclude: nodeModules
+      },
+      {
+        test: /[/\\]theme-\w+\.styl$/,
+        loader: loaderUtil(),
+        exclude: nodeModules
       }
     ]
   },
@@ -103,7 +94,8 @@ if (minimize) {
       comments: false,
       sourceMap
     }),
-    bootstrapLoader
+    bootstrapLoader,
+    appLoader
   )
 }
 
