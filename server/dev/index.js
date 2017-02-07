@@ -38,7 +38,6 @@ export default (app, opts) => {
     stats = stats.toJson()
     stats.errors.forEach(err => console.error(err))
     stats.warnings.forEach(err => console.warn(err))
-    // eslint-disable-next-line no-eval
-    opts.bundleUpdated(mfs.readFileSync(paths.dist('server-bundle.js'), 'utf-8'), true)
+    opts.bundleUpdated(JSON.parse(mfs.readFileSync(paths.dist('react-ssr-bundle.json'), 'utf-8')))
   })
 }

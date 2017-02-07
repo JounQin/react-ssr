@@ -1,5 +1,5 @@
 import React from 'react'
-import {renderToString} from 'react-dom/server'
+import {renderToString, renderToStaticMarkup} from 'react-dom/server'
 import {Provider} from 'react-redux'
 import {createMemoryHistory, match, RouterContext} from 'react-router'
 import {syncHistoryWithStore} from 'react-router-redux'
@@ -30,7 +30,7 @@ export default (context) => {
         const styles = context.styles
         if (styles) content += styles
         content += template.neck
-        content += `<div id="app">${renderToString(
+        content += `<div id="app">${(__DEV__ ? renderToStaticMarkup : renderToString)(
           <Provider store={store}>
             <RouterContext {...renderProps}/>
           </Provider>

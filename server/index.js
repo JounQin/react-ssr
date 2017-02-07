@@ -60,7 +60,7 @@ app.use(async(ctx, next) => {
 
   try {
     const context = {url: req.url, template: parseTemplate(template)}
-    const executed = await runInVm(bundle, context)
+    const executed = await runInVm(bundle.entry, bundle.files, context)
     const {status, content} = await executed
     ctx.status = status
     res[status === 302 ? 'redirect' : 'end'](content)
@@ -78,7 +78,7 @@ if (__DEV__) {
     templateUpdated: temp => (template = temp)
   })
 } else {
-  bundle = fs.readFileSync(paths.dist('server-bundle.js'), 'utf-8')
+  bundle = require(paths.dist('react-ssr-bundle.json'))
   template = fs.readFileSync(paths.dist('index.html'), 'utf-8')
   app.use(serve('dist'))
 }
