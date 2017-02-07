@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "cross-env DEBUG=hi:* node build/bin/start",
     "start": "cross-env NODE_ENV=production npm run dev",
-    "build": "rimraf dist && npm run compile",
+    "build": "rimraf dist && npm run compile && npm run uglify",
+    "uglify": "cross-env DEBUG=hi:* babel-node build/bin/uglify",
     "compile:base": "npm run compile:client && npm run compile:server",
     "compile:dev": "cross-env DEBUG=hi:* npm run compile:base",
     "compile": "cross-env NODE_ENV=production npm run compile:dev",
@@ -60,6 +61,7 @@
     "file-loader": "^0.10.0",
     "html-webpack-plugin": "^2.28.0",
     "memory-fs": "^0.4.1",
+    "node-uglifier": "^0.5.4",
     "pug": "^2.0.0-beta11",
     "redux-devtools": "^3.3.2",
     "redux-devtools-dock-monitor": "^1.1.1",
