@@ -3,6 +3,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware'
 import MFS from 'memory-fs'
 import webpackDev from './webpack-dev'
 import webpackHot from './webpack-hot'
+
 import config, {paths} from '../../build/config'
 import {clientConfig, serverConfig} from '../../build/webpack'
 
@@ -38,6 +39,6 @@ export default (app, opts) => {
     stats.errors.forEach(err => console.error(err))
     stats.warnings.forEach(err => console.warn(err))
     // eslint-disable-next-line no-eval
-    opts.bundleUpdated(eval(mfs.readFileSync(paths.dist('server-bundle.js'), 'utf-8')))
+    opts.bundleUpdated(mfs.readFileSync(paths.dist('server-bundle.js'), 'utf-8'), true)
   })
 }

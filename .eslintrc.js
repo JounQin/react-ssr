@@ -44,6 +44,7 @@ module.exports = {
         named: 'never'
       }
     ],
-    'object-curly-spacing': 0
+    'object-curly-spacing': 0,
+    'prefer-reflect': 0
   }
 }

@@ -8,7 +8,8 @@ import serialize from 'serialize-javascript'
 import routes from 'routes'
 import {configureStore} from 'store'
 
-export default (url, template) => {
+export default (context) => {
+  const {template, url} = context
   return new Promise((resolve, reject) => {
     const memoryHistory = createMemoryHistory(url)
     const store = configureStore(memoryHistory)
@@ -25,7 +26,10 @@ export default (url, template) => {
         content = redirectLocation.pathname + redirectLocation.search
       } else if (renderProps) {
         status = 200
-        content = template.head + template.neck
+        content = template.head
+        const styles = context.styles
+        if (styles) content += styles
+        content += template.neck
         content += `<div id="app">${renderToString(
           <Provider store={store}>
             <RouterContext {...renderProps}/>

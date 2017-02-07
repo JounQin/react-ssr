@@ -9,7 +9,7 @@ import config, {globals, paths, pkg, vendors} from '../config'
 
 import base, {CSS_LOADER, nodeModules, STYLE_LOADER, STYLUS_LOADER} from './base'
 
-const {devTool, minimize} = config
+const {minimize, devTool} = config
 
 const sourceMap = !!devTool
 
@@ -81,8 +81,6 @@ const clientConfig = {
 }
 
 if (minimize) {
-  debug(`Enable plugins for ${NODE_ENV} (UglifyJS).`)
-
   clientConfig.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       mangle: !sourceMap,

@@ -5,6 +5,7 @@ import compress from 'koa-compress'
 import logger from 'koa-logger'
 import serve from 'koa-static'
 import _debug from 'debug'
+import runInVm from './run-in-vm'
 
 import config, {globals, paths} from '../build/config'
 
@@ -58,7 +59,9 @@ app.use(async(ctx, next) => {
   if (intercept(ctx)) return await next()
 
   try {
-    const {status, content} = await bundle.default(req.url, parseTemplate(template))
+    const context = {url: req.url, template: parseTemplate(template)}
+    const executed = await runInVm(bundle, context)
+    const {status, content} = await executed
     ctx.status = status
     res[status === 302 ? 'redirect' : 'end'](content)
     res.end(content)
@@ -75,7 +78,7 @@ if (__DEV__) {
     templateUpdated: temp => (template = temp)
   })
 } else {
-  bundle = require(paths.dist('server-bundle.js'))
+  bundle = fs.readFileSync(paths.dist('server-bundle.js'), 'utf-8')
   template = fs.readFileSync(paths.dist('index.html'), 'utf-8')
   app.use(serve('dist'))
 }

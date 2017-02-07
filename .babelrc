@@ -11,5 +11,8 @@
       ]
     }
   },
+  "ignore": [
+    "dist/**/*.js"
+  ],
   "comments": false
 }
