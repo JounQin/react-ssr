@@ -1,4 +1,5 @@
 import webpack from 'webpack'
+import BabiliPlugin from 'babili-webpack-plugin'
 import _debug from 'debug'
 
 import {globals, paths, pkg} from '../config'
@@ -26,7 +27,8 @@ const serverConfig = {
     new webpack.DefinePlugin({
       ...globals,
       __SERVER__: true
-    })
+    }),
+    new BabiliPlugin()
   ],
   externals: Object.keys(pkg.dependencies)
 }
