@@ -6,7 +6,7 @@ import {Router, applyRouterMiddleware, browserHistory} from 'react-router'
 import {useScroll} from 'react-router-scroll'
 import {AppContainer} from 'react-hot-loader'
 
-import {configureStore, routes} from './entry'
+import {configureStore, routes, DevTools} from './entry'
 
 const store = configureStore(browserHistory, window.__initialState__)
 
@@ -22,6 +22,15 @@ const renderApp = () => render(
 )
 
 renderApp()
+
+if (__DEV__) {
+  render(
+    <Provider store={store}>
+      <DevTools/>
+    </Provider>,
+    document.getElementById('devtools')
+  )
+}
 
 if (module.hot) {
   module.hot.accept('routes', () => {

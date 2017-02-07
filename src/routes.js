@@ -15,13 +15,13 @@ export default {
   path: '/',
   component: App,
   getIndexRoute(partialNextState, callback) {
-    resolve(__SERVER__ ? require('components/Home') : System.import('components/Home'), callback, true)
+    resolve(__DEV__ ? require('components/Home') : System.import('components/Home'), callback, true)
   },
   childRoutes: [
     {
       path: 'test',
       getComponent(nextState, callback) {
-        resolve(__SERVER__ ? require('components/Test') : System.import('components/Test'), callback)
+        resolve(__DEV__ ? require('components/Test') : System.import('components/Test'), callback)
       }
     }
   ]

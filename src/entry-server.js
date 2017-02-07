@@ -1,5 +1,5 @@
 import React from 'react'
-import {renderToString, renderToStaticMarkup} from 'react-dom/server'
+import {renderToString} from 'react-dom/server'
 import {Provider} from 'react-redux'
 import {createMemoryHistory, match, RouterContext} from 'react-router'
 import {syncHistoryWithStore} from 'react-router-redux'
@@ -25,11 +25,13 @@ export default (url, template) => {
       } else if (renderProps) {
         status = 200
         content = template.head + template.neck
-        content += `<div id="app">${(__DEV__ ? renderToStaticMarkup : renderToString)(
+        content += `<div id="app">${renderToString(
           <Provider store={store}>
             <RouterContext {...renderProps}/>
           </Provider>
         )}</div>`
+
+        if (__DEV__) content += '<div id="devtools"></div>'
 
         content += `<script>window.__initialState__=${serialize(store.getState())};</script>` + template.tail
       } else return reject()

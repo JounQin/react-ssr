@@ -11,7 +11,7 @@ const debug = _debug('hi:webpack:server')
 
 debug(`create webpack configuration for NODE_ENV:${NODE_ENV}`)
 
-const clientConfig = {
+const serverConfig = {
   ...base,
   target: 'node',
   devtool: false,
@@ -31,4 +31,4 @@ const clientConfig = {
   externals: Object.keys(pkg.dependencies)
 }
 
-export default clientConfig
+export default serverConfig

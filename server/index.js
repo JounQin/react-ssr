@@ -50,7 +50,10 @@ let bundle, template
 app.use(async(ctx, next) => {
   const {req, res} = ctx
 
-  if (!bundle || !template) return res.end('waiting for compilation... refresh in a moment.')
+  if (!bundle || !template) {
+    ctx.status = 200
+    return res.end('waiting for compilation... refresh in a moment.')
+  }
 
   if (intercept(ctx)) return await next()
 

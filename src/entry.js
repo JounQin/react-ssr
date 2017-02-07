@@ -1,2 +1,2 @@
 export routes from 'routes'
-export {configureStore} from 'store'
+export {configureStore, DevTools} from 'store'
