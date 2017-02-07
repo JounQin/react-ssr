@@ -9,7 +9,7 @@ import config, {globals, paths, pkg, vendors} from '../config'
 
 import base from './base'
 
-const {devTool, minimize} = config
+const {browsers, devTool, minimize} = config
 
 const sourceMap = !!devTool
 
@@ -19,12 +19,51 @@ const debug = _debug('hi:webpack:client')
 
 debug(`create webpack configuration for NODE_ENV:${NODE_ENV}`)
 
+const cssMinimize = minimize && {
+  autoprefixer: {
+    add: true,
+    remove: true,
+    browsers
+  },
+  discardComments: {
+    removeAll: true
+  },
+  safe: true,
+  sourcemap: sourceMap
+}
+
+const STYLUS_LOADER = 'stylus-loader?paths=node_modules/bootstrap-styl/'
+
+let bootstrapLoader
+
+const sourceLoaders = [{
+  loader: 'css-loader',
+  options: {
+    minimize,
+    sourceMap,
+    ...cssMinimize
+  }
+}, STYLUS_LOADER]
+
 const clientConfig = {
   ...base,
   target: 'web',
   entry: {
     app: [paths.src('entry-client')],
     vendors
+  },
+  module: {
+    rules: [
+      ...base.module.rules,
+      {
+        test: /\.styl$/,
+        use: minimize ?
+          (bootstrapLoader = new ExtractTextPlugin('bootstrap.[contenthash].css')).extract({
+            fallback: 'style-loader',
+            use: sourceLoaders
+          }) : ['style-loader', ...sourceLoaders]
+      }
+    ]
   },
   plugins: [
     ...base.plugins,
@@ -64,7 +103,7 @@ if (minimize) {
       comments: false,
       sourceMap
     }),
-    new ExtractTextPlugin('styles.css')
+    bootstrapLoader
   )
 }
 

@@ -7,15 +7,11 @@ const {__PROD__} = globals
 const PACKAGES = paths.base('packages')
 const NODE_MODULES = 'node_modules'
 
-const {browsers, devTool, minimize} = config
-
-export const STYLUS_LOADER = 'stylus-loader?paths=node_modules/bootstrap-styl/'
+const {devTool, minimize} = config
 
 export const prodEmpty = str => __PROD__ ? '' : str
 
 const filename = `${prodEmpty('[name].')}[${config.hashType}].js`
-
-const sourceMap = !!devTool
 
 const urlLoader = `url-loader?${JSON.stringify({
   limit: 10000,
@@ -23,19 +19,6 @@ const urlLoader = `url-loader?${JSON.stringify({
 })}`
 
 const nodeModules = /\bnode_modules\b/
-
-const cssMinimize = minimize && {
-  autoprefixer: {
-    add: true,
-    remove: true,
-    browsers
-  },
-  discardComments: {
-    removeAll: true
-  },
-  safe: true,
-  sourcemap: sourceMap
-}
 
 export default {
   resolve: {
@@ -64,17 +47,6 @@ export default {
           cacheDirectory: true
         },
         exclude: nodeModules
-      },
-      {
-        test: /\.styl$/,
-        use: ['style-loader', {
-          loader: 'css-loader',
-          options: {
-            minimize,
-            sourceMap,
-            ...cssMinimize
-          }
-        }, STYLUS_LOADER]
       },
       {
         test: /\.(png|jpe?g|gif)$/,
