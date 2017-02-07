@@ -6,7 +6,8 @@ import {Router, applyRouterMiddleware, browserHistory} from 'react-router'
 import {useScroll} from 'react-router-scroll'
 import {AppContainer} from 'react-hot-loader'
 
-import {configureStore, routes, DevTools} from './entry'
+import routes from 'routes'
+import {configureStore, DevTools} from 'store'
 
 const store = configureStore(browserHistory, window.__initialState__)
 

@@ -5,7 +5,8 @@ import {createMemoryHistory, match, RouterContext} from 'react-router'
 import {syncHistoryWithStore} from 'react-router-redux'
 import serialize from 'serialize-javascript'
 
-import {configureStore, routes} from './entry'
+import routes from 'routes'
+import {configureStore} from 'store'
 
 export default (url, template) => {
   return new Promise((resolve, reject) => {
