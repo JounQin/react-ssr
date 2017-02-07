@@ -79,7 +79,7 @@ export default {
     rules: [
       {
         test: /^(?!.*[/\\](app|bootstrap|theme-\w+)\.styl$).*\.styl$/,
-        loader: [STYLE_LOADER, CSS_MODULE_LOADER, STYLUS_LOADER],
+        loader: ['react-style-loader', CSS_MODULE_LOADER, STYLUS_LOADER],
         exclude: nodeModules
       },
       {
