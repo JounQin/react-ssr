@@ -1,3 +1,5 @@
+import fs from 'fs'
+
 import Koa from 'koa'
 import compress from 'koa-compress'
 import logger from 'koa-logger'
@@ -13,35 +15,55 @@ import serialize from 'serialize-javascript'
 
 import config, {globals, paths} from '../build/config'
 
+import intercept from './intercept'
+
 const {__DEV__} = globals
 
 const debug = _debug('hi:server')
 
 const app = new Koa()
 
-const flag = __DEV__
+const flag = true
 
 if (!flag) app.use(require('./history').default())
 app.use(compress())
 app.use(logger())
 
-const HTML = ({content, store}) => (
-  <html>
-  <body>
-  <div id="app" dangerouslySetInnerHTML={{__html: content}}/>
-  <div id="devtools"/>
-  <script dangerouslySetInnerHTML={{__html: `window.__initialState__=${serialize(store.getState())};`}}/>
-  </body>
-  </html>
-)
+function parseTemplate(template, contentPlaceholder = '<div id="app">') {
+  if (typeof template === 'object') {
+    return template
+  }
 
-let configureStore, routes
+  let i = template.indexOf('</head>')
+  const j = template.indexOf(contentPlaceholder)
+
+  if (j < 0) {
+    throw new Error(`Content placeholder not found in template.`)
+  }
+
+  if (i < 0) {
+    i = template.indexOf('<body>')
+    if (i < 0) {
+      i = j
+    }
+  }
+
+  return {
+    head: template.slice(0, i),
+    neck: template.slice(i, j),
+    tail: template.slice(j + contentPlaceholder.length)
+  }
+}
+
+let configureStore, routes, template
 
 if (flag) {
-  app.use(async (ctx, next) => {
+  app.use(async(ctx, next) => {
     const {req, res} = ctx
 
     if (flag && (!routes || !configureStore)) return res.end('waiting for compilation... refresh in a moment.')
+
+    if (intercept(ctx)) return await next()
 
     const memoryHistory = createMemoryHistory(req.url)
     const store = configureStore(memoryHistory)
@@ -54,12 +76,18 @@ if (flag) {
       } else if (redirectLocation) {
         res.redirect(302, redirectLocation.pathname + redirectLocation.search)
       } else if (renderProps) {
-        const content = renderToString(
+        let content = template.head + template.neck
+
+        content += `<div id="app">${renderToString(
           <Provider store={store}>
             <RouterContext {...renderProps}/>
           </Provider>
-        )
-        res.end('<!doctype html>\n' + renderToString(<HTML content={content} store={store}/>))
+        )}</div>`
+
+        content += `<script>window.__initialState__=${serialize(store.getState())};</script>` + template.tail
+
+        ctx.status = 200
+        res.end(content)
       }
     })
   })
@@ -72,9 +100,7 @@ if (__DEV__) {
   })
 } else {
   const bundle = require(paths.dist('server-bundle.js'))
-
-  console.log(bundle)
-
+  template = parseTemplate(fs.readFileSync(paths.dist('index.html')).toString())
   configureStore = bundle.configureStore
   routes = bundle.routes
   app.use(serve('dist'))

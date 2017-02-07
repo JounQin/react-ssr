@@ -10,7 +10,6 @@
   "scripts": {
     "dev": "cross-env DEBUG=hi:* node build/bin/start",
     "start": "cross-env NODE_ENV=production npm run dev",
-    "redux": "babel-node server.js",
     "build": "rimraf dist && npm run compile",
     "compile:base": "npm run compile:client && npm run compile:server",
     "compile:dev": "cross-env DEBUG=hi:* npm run compile:base",
@@ -55,7 +54,6 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-react": "^6.9.0",
     "eslint-plugin-standard": "^2.0.1",
-    "express": "^4.14.1",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",
     "html-webpack-plugin": "^2.28.0",
     "memory-fs": "^0.4.1",
