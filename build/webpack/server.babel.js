@@ -15,6 +15,10 @@ debug(`create webpack configuration for NODE_ENV:${NODE_ENV}`)
 
 const serverConfig = {
   ...base,
+  resolve: {
+    ...base.resolve,
+    alias: {}
+  },
   target: 'node',
   devtool: false,
   entry: paths.src('entry-server.js'),

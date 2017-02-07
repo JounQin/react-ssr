@@ -24,7 +24,10 @@ export const paths = (() => {
 
 export const pkg = require(paths.base('package.json'))
 
-export const alias = {}
+export const alias = {
+  "react": 'react-lite',
+  'react-dom': 'react-lite'
+}
 
 export const vendors = [
   'react',

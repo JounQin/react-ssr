@@ -4163,6 +4163,10 @@ react-json-tree@^0.10.0:
     react-base16-styling "^0.4.1"
     react-pure-render "^1.0.2"
 
+react-lite@^0.15.31:
+  version "0.15.31"
+  resolved "http://registry.npm.taobao.org/react-lite/download/react-lite-0.15.31.tgz#6209e1a37cf91732ee677055f8f7d63bfb0efbbc"
+
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/react-proxy/-/react-proxy-3.0.0-alpha.1.tgz#4400426bcfa80caa6724c7755695315209fa4b07"
