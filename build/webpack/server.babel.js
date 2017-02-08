@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import BabiliPlugin from 'babili-webpack-plugin'
-import WebpackSSRPlugin from '../../packages/react-ssr-webpack-plugin'
+import ReactSsrPlugin from '../../packages/react-ssr-webpack-plugin'
 import _debug from 'debug'
 
 import {globals, paths, pkg} from '../config'
@@ -34,7 +34,7 @@ const serverConfig = {
       __SERVER__: true
     }),
     new BabiliPlugin(),
-    new WebpackSSRPlugin()
+    new ReactSsrPlugin()
   ],
   externals: Object.keys(pkg.dependencies)
 }
