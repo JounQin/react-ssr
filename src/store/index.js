@@ -1,17 +1,8 @@
 import React from 'react'
 
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux'
-import {createDevTools} from 'redux-devtools'
-import LogMonitor from 'redux-devtools-log-monitor'
-import DockMonitor from 'redux-devtools-dock-monitor'
 
 import {routerReducer, routerMiddleware} from 'react-router-redux'
-
-export const DevTools = createDevTools(
-  <DockMonitor toggleVisibilityKey="ctrl-h" changePositionKey="ctrl-q">
-    <LogMonitor theme="tomorrow" preserveScrollTop={false}/>
-  </DockMonitor>
-)
 
 export const configureStore = (history, initialState) => {
   const reducer = combineReducers({
@@ -19,9 +10,7 @@ export const configureStore = (history, initialState) => {
   })
 
   let devTools = []
-  if (typeof document !== 'undefined') {
-    devTools = [DevTools.instrument()]
-  }
+  __DEV__ && !__SERVER__ && devTools.push(window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
   return createStore(
     reducer,

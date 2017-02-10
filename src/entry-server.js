@@ -8,16 +8,16 @@ import serialize from 'serialize-javascript'
 import routes from 'routes'
 import {configureStore} from 'store'
 
-export default (context) => {
+export default context => {
   const {template, url} = context
   return new Promise((resolve, reject) => {
     const memoryHistory = createMemoryHistory(url)
     const store = configureStore(memoryHistory)
     const history = syncHistoryWithStore(memoryHistory, store)
 
-    let status, content
-
     match({history, routes, location: url}, (error, redirectLocation, renderProps) => {
+      let status, content
+
       if (error) {
         status = 500
         content = error.message
@@ -27,18 +27,15 @@ export default (context) => {
       } else if (renderProps) {
         status = 200
         content = template.head
-        const styles = context.styles
-        if (styles) content += styles
+        content += context.styles || ''
         content += template.neck
         content += `<div id="app">${renderToString(
           <Provider store={store}>
             <RouterContext {...renderProps}/>
           </Provider>
         )}</div>`
-
-        if (__DEV__) content += '<div id="devtools"></div>'
-
-        content += `<script>window.__initialState__=${serialize(store.getState())};</script>` + template.tail
+        content += `<script>window.__initialState__=${serialize(store.getState())}</script>`
+        content += template.tail
       } else return reject()
 
       resolve({

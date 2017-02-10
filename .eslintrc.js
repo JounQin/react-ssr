@@ -37,6 +37,7 @@ module.exports = {
     ],
     'max-nested-callbacks': 2,
     'max-params': [2, 5],
+    'no-unused-expressions': 0,
     'space-before-function-paren': [
       2,
       {
