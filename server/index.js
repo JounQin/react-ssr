@@ -60,8 +60,7 @@ app.use(async(ctx, next) => {
 
   try {
     const context = {url: req.url, template: parseTemplate(template)}
-    const executed = await runInVm(bundle.entry, bundle.files, context)
-    const {status, content} = await executed
+    const {status, content} = await runInVm(bundle.entry, bundle.files, context)
     ctx.status = status
     res[status === 302 ? 'redirect' : 'end'](content)
     res.end(content)
