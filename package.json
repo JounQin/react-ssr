@@ -72,6 +72,7 @@
     "react-style-loader": "^0.1.0",
     "rimraf": "^2.5.4",
     "serialize-javascript": "^1.3.0",
+    "ssr-webpack-plugin": "^0.0.1",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.4.0",

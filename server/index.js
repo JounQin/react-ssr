@@ -77,7 +77,7 @@ if (__DEV__) {
     templateUpdated: temp => (template = temp)
   })
 } else {
-  bundle = require(paths.dist('react-ssr-bundle.json'))
+  bundle = require(paths.dist('ssr-bundle.json'))
   template = fs.readFileSync(paths.dist('index.html'), 'utf-8')
   app.use(serve('dist'))
 }

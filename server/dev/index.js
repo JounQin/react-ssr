@@ -38,6 +38,6 @@ export default (app, opts) => {
     stats = stats.toJson()
     stats.errors.forEach(console.error)
     stats.warnings.forEach(console.warn)
-    opts.bundleUpdated(JSON.parse(mfs.readFileSync(paths.dist('react-ssr-bundle.json'), 'utf-8')))
+    opts.bundleUpdated(JSON.parse(mfs.readFileSync(paths.dist('ssr-bundle.json'), 'utf-8')))
   })
 }
