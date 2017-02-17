@@ -9,7 +9,7 @@ var hasDocument = typeof document !== 'undefined'
 if (typeof DEBUG !== 'undefined' && DEBUG) {
   if (!hasDocument) {
     throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
+    'react-style-loader cannot be used in a non-browser environment. ' +
     "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
   ) }
 }

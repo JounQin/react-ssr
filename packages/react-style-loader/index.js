@@ -12,7 +12,7 @@ module.exports = function () {}
 module.exports.pitch = function (remainingRequest) {
   if (this.cacheable) this.cacheable()
 
-  var isServer = this.options.target === 'node'
+  var isServer = this.target === 'node'
   var isProduction = this.minimize || process.env.NODE_ENV === 'production'
   var addStylesClientPath = loaderUtils.stringifyRequest(this, '!' + path.join(__dirname, 'lib/addStylesClient.js'))
   var addStylesServerPath = loaderUtils.stringifyRequest(this, '!' + path.join(__dirname, 'lib/addStylesServer.js'))
@@ -50,7 +50,7 @@ module.exports.pitch = function (remainingRequest) {
       '}'
     ]).join('\n')
   } else {
-    // on the server: attach to Vue SSR context
+    // on the server: attach to React SSR context
     return shared.concat([
       '// add CSS to SSR context',
       'require(' + addStylesServerPath + ')(' + id + ', content, ' + isProduction + ');'
