@@ -5,7 +5,7 @@ import compress from 'koa-compress'
 import logger from 'koa-logger'
 import serve from 'koa-static'
 import _debug from 'debug'
-import runInVm from './run-in-vm'
+import runInVm from 'run-in-vm'
 
 import config, {globals, paths} from '../build/config'
 
@@ -60,7 +60,7 @@ app.use(async(ctx, next) => {
 
   try {
     const context = {url: req.url, template: parseTemplate(template)}
-    const {status, content} = await runInVm(bundle.entry, bundle.files, context)
+    const {status, content} = await runInVm(bundle, context)
     ctx.status = status
     res[status === 302 ? 'redirect' : 'end'](content)
     res.end(content)
