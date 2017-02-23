@@ -1,21 +1,15 @@
-import React from 'react'
-
-import App from 'App'
-
-const resolve = (module, callback, route) =>
-  module.then(({default: component}) => callback(null, route ? {component} : component))
+const resolve = (promise, callback) => promise.then(module => callback(null, module.default))
 
 export default {
   path: '/',
-  component: App,
   getIndexRoute(partialNextState, callback) {
-    resolve(System.import('components/Home'), callback, true)
+    System.import('views/Home').then(module => callback(null, {component: module.default}))
   },
   childRoutes: [
     {
-      path: 'test',
+      path: 'counter',
       getComponent(nextState, callback) {
-        resolve(System.import('components/Test'), callback)
+        resolve(System.import('views/Counter'), callback)
       }
     }
   ]

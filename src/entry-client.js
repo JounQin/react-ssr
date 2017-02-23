@@ -10,7 +10,7 @@ import {useScroll} from 'react-router-scroll'
 import {AppContainer} from 'react-hot-loader'
 
 import routes from 'routes'
-import {configureStore, DevTools} from 'store'
+import {configureStore} from 'store'
 
 const store = configureStore(browserHistory, window.__initialState__)
 
@@ -19,7 +19,7 @@ const history = syncHistoryWithStore(browserHistory, store)
 const renderApp = () => match({history, routes}, (error, redirectLocation, renderProps) => render(
   <AppContainer>
     <Provider store={store}>
-      <Router {...renderProps} render={applyRouterMiddleware(useScroll())}/>
+      <Router {...renderProps} render={applyRouterMiddleware(useScroll())} key={Math.random()}/>
     </Provider>
   </AppContainer>,
   document.getElementById('app')
@@ -27,18 +27,6 @@ const renderApp = () => match({history, routes}, (error, redirectLocation, rende
 
 renderApp()
 
-if (__DEV__) {
-  render(
-    <Provider store={store}>
-      <DevTools/>
-    </Provider>,
-    document.getElementById('devtools')
-  )
-}
+if (module.hot) module.hot.accept('routes', renderApp)
 
-if (module.hot) {
-  module.hot.accept('routes', () => {
-    require('routes')
-    renderApp()
-  })
-}
+location.protocol === 'https:' && navigator.serviceWorker && navigator.serviceWorker.register('/service-worker.js')
