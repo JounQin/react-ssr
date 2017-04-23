@@ -1,3 +1,6 @@
+import 'styles/bootstrap'
+import 'styles/app'
+
 const resolve = (promise, callback) => promise.then(module => callback(null, module.default))
 
 export default {

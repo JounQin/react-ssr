@@ -5,9 +5,9 @@ import _debug from 'debug'
 
 import config, {globals, paths, pkg} from '../config'
 
-import base from './base'
+import base, {nodeModules, CSS_LOADER, STYLUS_LOADER} from './base'
 
-const {NODE_ENV} = globals
+const {NODE_ENV, __PROD__} = globals
 
 const debug = _debug('hi:webpack:server')
 
@@ -22,6 +22,16 @@ const serverConfig = {
     ...base.output,
     filename: 'server-bundle.js',
     libraryTarget: 'commonjs2'
+  },
+  module: {
+    rules: [
+      ...base.module.rules,
+      {
+        test: /[/\\](app|bootstrap)\.styl$/,
+        loader: __PROD__ ? 'null-loader' : `react-style-loader!${CSS_LOADER}!${STYLUS_LOADER}`,
+        exclude: nodeModules
+      }
+    ]
   },
   plugins: [
     ...base.plugins,

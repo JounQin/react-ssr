@@ -29,6 +29,7 @@ export const alias = {}
 
 export const vendors = [
   'classnames',
+  'prop-types',
   'react',
   'react-dom',
   'react-redux',
