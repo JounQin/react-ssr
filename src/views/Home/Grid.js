@@ -15,7 +15,12 @@ export default class extends React.PureComponent {
       text: PropTypes.string,
       link: PropTypes.string,
       className: PropTypes.string
-    })
+    }),
+    ssrContext: PropTypes.object
+  }
+
+  componentWillMount() {
+    this.$inject(classes)
   }
 
   render() {

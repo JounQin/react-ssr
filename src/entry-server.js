@@ -13,19 +13,21 @@ export default context => {
       let status, content
 
       if (error) {
-        status = 500
         content = error.message
+        status = 500
       } else if (redirectLocation) {
-        status = 302
         content = redirectLocation.pathname + redirectLocation.search
+        status = 302
       } else if (renderProps) {
-        status = 200
+        renderProps.routes.ssrContext = context
+        const routerContext = <RouterContext {...renderProps}/>
+        const app = `<div id="app">${renderToString(routerContext)}</div>`
         content = template.head
         content += context.styles || ''
         content += template.neck
-        const routerContext = <RouterContext {...renderProps}/>
-        content += `<div id="app">${renderToString(routerContext)}</div>`
+        content += app
         content += template.tail
+        status = 200
       } else return reject(error)
 
       resolve({

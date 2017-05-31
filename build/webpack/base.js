@@ -51,7 +51,8 @@ const cssModuleOptions = {
   localIdentName
 }
 
-export const CSS_MODULE_LOADER = 'css-loader?' + JSON.stringify(Object.assign({}, cssOptions, cssModuleOptions))
+export const CSS_MODULE_LOADER = 'css-loader?' +
+  JSON.stringify(Object.assign({react: true}, cssOptions, cssModuleOptions))
 
 export const nodeModules = /\bnode_modules\b/
 

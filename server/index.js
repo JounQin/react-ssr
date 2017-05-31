@@ -56,7 +56,10 @@ app.use(async (ctx, next) => {
     return res.end('waiting for compilation... refresh in a moment.')
   }
 
-  if (intercept(ctx)) return await next()
+  if (intercept(ctx)) {
+    await next()
+    return
+  }
 
   try {
     const context = {url: req.url, template}
@@ -73,11 +76,11 @@ app.use(async (ctx, next) => {
 
 if (__DEV__) {
   require('./dev').default(app, {
-    bundleUpdated: bundle => (run = runInVm({bundle})),
+    bundleUpdated: bundle => (run = runInVm({bundle, runInNewContext: false})),
     templateUpdated: temp => (template = parseTemplate(temp))
   })
 } else {
-  run = runInVm({bundle: require(paths.dist('ssr-bundle.json'))})
+  run = runInVm({bundle: require(paths.dist('ssr-bundle.json')), runInNewContext: false})
   template = parseTemplate(fs.readFileSync(paths.dist('index.html'), 'utf-8'))
   app.use(serve('dist'))
 }

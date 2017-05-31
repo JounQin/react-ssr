@@ -5,6 +5,10 @@ import Grid from './Grid'
 import classes from './index.styl'
 
 export default class extends React.PureComponent {
+  componentWillMount() {
+    this.$inject(classes)
+  }
+
   render() {
     return <main className={classes.main}>
       {[{
@@ -26,7 +30,7 @@ export default class extends React.PureComponent {
         text: 'View Technology',
         link: 'https://blog.1stg.me',
         className: 'blog'
-      }].map((info, index) => <Grid key={index} info={info}/>)}
+      }].map((info, index) => <Grid key={index} info={info} ssrContext={this.$ssrContext}/>)}
     </main>
   }
 }
