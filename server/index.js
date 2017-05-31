@@ -46,12 +46,12 @@ function parseTemplate(template, contentPlaceholder = '<div id="app">') {
   }
 }
 
-let bundle, template
+let run, template
 
-app.use(async(ctx, next) => {
+app.use(async (ctx, next) => {
   const {req, res} = ctx
 
-  if (!bundle || !template) {
+  if (!run || !template) {
     ctx.status = 200
     return res.end('waiting for compilation... refresh in a moment.')
   }
@@ -59,8 +59,8 @@ app.use(async(ctx, next) => {
   if (intercept(ctx)) return await next()
 
   try {
-    const context = {url: req.url, template: parseTemplate(template)}
-    const {status, content} = await runInVm(bundle, context)
+    const context = {url: req.url, template}
+    const {status, content} = await run(context)
     ctx.status = status
     res[status === 302 ? 'redirect' : 'end'](content)
     res.end(content)
@@ -73,12 +73,12 @@ app.use(async(ctx, next) => {
 
 if (__DEV__) {
   require('./dev').default(app, {
-    bundleUpdated: bund => (bundle = bund),
-    templateUpdated: temp => (template = temp)
+    bundleUpdated: bundle => (run = runInVm({bundle})),
+    templateUpdated: temp => (template = parseTemplate(temp))
   })
 } else {
-  bundle = require(paths.dist('ssr-bundle.json'))
-  template = fs.readFileSync(paths.dist('index.html'), 'utf-8')
+  run = runInVm({bundle: require(paths.dist('ssr-bundle.json'))})
+  template = parseTemplate(fs.readFileSync(paths.dist('index.html'), 'utf-8'))
   app.use(serve('dist'))
 }
 
