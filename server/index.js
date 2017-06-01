@@ -4,6 +4,7 @@ import Koa from 'koa'
 import compress from 'koa-compress'
 import logger from 'koa-logger'
 import serve from 'koa-static'
+import re from 'path-to-regexp'
 import _debug from 'debug'
 
 import config, {globals, paths} from '../build/config'
@@ -19,16 +20,39 @@ const app = new Koa()
 app.use(compress())
 app.use(logger())
 
-let run, template, readyPromise
-let mfs // eslint-disable-line
+let run, template, readyPromise, mfs
+
+const koaVersion = require('koa/package.json').version
+const reactVersion = require('react/package.json').version
+
+const INDEX_PAGE = 'index.html'
+
+const NON_SSR_PATTERN = []
+
+const DEFAULT_HEADERS = {
+  'Content-Type': 'text/html',
+  Server: `koa/${koaVersion}; vue-server-renderer/${reactVersion}`
+}
 
 app.use(async (ctx, next) => {
   await readyPromise
 
-  const {res, url} = ctx
-
   if (intercept(ctx, {logger: __DEV__ && debug})) {
     await next()
+    return
+  }
+
+  ctx.set(DEFAULT_HEADERS)
+
+  const {res, url} = ctx
+
+  if (NON_SSR_PATTERN.find(pattern => re(pattern).exec(url))) {
+    if (__DEV__) {
+      ctx.body = mfs.createReadStream(paths.dist(INDEX_PAGE))
+    } else {
+      ctx.url = INDEX_PAGE
+      await next()
+    }
     return
   }
 
