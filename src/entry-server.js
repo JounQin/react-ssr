@@ -19,7 +19,7 @@ export default context => {
         content = redirectLocation.pathname + redirectLocation.search
         status = 302
       } else if (renderProps) {
-        renderProps.routes.ssrContext = context
+        renderProps.router.ssrContext = context
         const routerContext = <RouterContext {...renderProps}/>
         const app = `<div id="app">${renderToString(routerContext)}</div>`
         content = template.head

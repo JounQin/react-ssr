@@ -1,21 +1,20 @@
 import React from 'react'
+import {withRouter} from 'react-router'
 
 import 'styles/bootstrap'
 import 'styles/app'
 
-const proto = React.PureComponent.prototype
+import empty from 'styles/_empty'
 
-proto.$inject = function (style, ssrContext) {
-  ssrContext = ssrContext || this.$ssrContext
-  ssrContext && style.__inject__ && style.__inject__(ssrContext)
-}
-
-proto.hasOwnProperty('$ssrContext') || Object.defineProperty(proto, '$ssrContext', {
-  get() {
-    const {props} = this
-    return (props.routes || props).ssrContext
+global.withStyle = (comp, style = empty, router = true) => {
+  class wrapped extends comp {
+    componentWillMount() {
+      const {ssrContext} = this.props.router
+      ssrContext && style.__inject__ && style.__inject__(ssrContext)
+    }
   }
-})
+  return router ? withRouter(wrapped) : wrapped
+}
 
 const resolve = (promise, callback) => promise.then(module => callback(null, module.default))
 

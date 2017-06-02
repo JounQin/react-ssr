@@ -11,16 +11,10 @@ module.exports = {
     'react'
   ],
   env: {
-    browser: true
-  },
-  globals: {
-    __DEV__: false,
-    __PROD__: false,
-    __SERVER__: false,
-    __SSR__: false
+    node: true
   },
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 2017,
     sourceType: 'module'
   },
   rules: {

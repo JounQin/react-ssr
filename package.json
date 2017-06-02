@@ -1,12 +1,15 @@
 {
-  "name": "1stg",
+  "name": "react-ssr",
   "version": "0.0.1",
   "private": true,
   "description": "try to learn using React with server slide render deeply",
   "main": "index.js",
-  "repository": "git@github.com:JounQin/1stg.git",
+  "repository": "git@github.com:JounQin/react-ssr.git",
   "author": "JounQin <admin@1stg.me>",
   "license": "MIT",
+  "engines": {
+    "node": ">=7.10.0"
+  },
   "scripts": {
     "dev": "cross-env DEBUG=hi:* node build/bin/start",
     "prod": "cross-env NODE_ENV=production npm run dev",
@@ -18,7 +21,7 @@
     "compile:client": "webpack --config build/webpack/client.babel.js --progress --hide-modules",
     "compile:server": "webpack --config build/webpack/server.babel.js --progress --hide-modules",
     "lint": "npm run lint:es",
-    "lint:es": "eslint .",
+    "lint:es": "eslint --max-warnings 10  .",
     "lint:fix": "npm run lint:es -- --fix",
     "pm2": "cross-env NODE_ENV=production PORT=4000 pm2 start build/bin/start.js --name=react-ssr"
   },
@@ -61,7 +64,7 @@
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-babel": "^4.0.1",
     "eslint-plugin-import": "^2.3.0",
-    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-node": "^5.0.0",
     "eslint-plugin-promise": "^3.4.2",
     "eslint-plugin-react": "^7.0.1",
     "eslint-plugin-standard": "^3.0.1",

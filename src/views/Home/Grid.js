@@ -8,19 +8,14 @@ import classes from './grid.styl'
 
 import github from './github.png'
 
-export default class extends React.PureComponent {
+export default withStyle(class extends React.PureComponent {
   static propTypes = {
     info: PropTypes.shape({
       title: PropTypes.string,
       text: PropTypes.string,
       link: PropTypes.string,
       className: PropTypes.string
-    }),
-    ssrContext: PropTypes.object
-  }
-
-  componentWillMount() {
-    this.$inject(classes)
+    })
   }
 
   render() {
@@ -39,4 +34,4 @@ export default class extends React.PureComponent {
       </div>
     </Link>
   }
-}
+}, classes)
