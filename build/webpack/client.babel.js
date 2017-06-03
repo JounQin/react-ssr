@@ -113,10 +113,16 @@ if (__DEV__) {
 
   clientConfig.plugins.push(
     new SWPrecacheWebpackPlugin({
-      cacheId: 'vue-ssr',
+      cacheId: 'react-ssr',
       filename: 'service-worker.js',
-      dontCacheBustUrlsMatching: /./,
-      staticFileGlobsIgnorePatterns: [/index\.html$/, /\.map$/]
+      minify: true,
+      dontCacheBustUrlsMatching: /\./,
+      staticFileGlobsIgnorePatterns: [/index\.html$/, /\.map$/, /\.json$/],
+      stripPrefix: paths.dist().replace(/\\/g, '/'),
+      runtimeCaching: [{
+        urlPattern: /\//,
+        handler: 'networkFirst'
+      }]
     })
   )
 }
