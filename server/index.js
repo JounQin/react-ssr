@@ -31,7 +31,7 @@ const NON_SSR_PATTERN = []
 
 const DEFAULT_HEADERS = {
   'Content-Type': 'text/html',
-  Server: `koa/${koaVersion}; vue-server-renderer/${reactVersion}`
+  Server: `koa/${koaVersion}; react/${reactVersion}`
 }
 
 app.use(async (ctx, next) => {
@@ -44,9 +44,7 @@ app.use(async (ctx, next) => {
 
   ctx.set(DEFAULT_HEADERS)
 
-  const {res, url} = ctx
-
-  if (NON_SSR_PATTERN.find(pattern => re(pattern).exec(url))) {
+  if (NON_SSR_PATTERN.find(pattern => re(pattern).exec(ctx.url))) {
     if (__DEV__) {
       ctx.body = mfs.createReadStream(paths.dist(INDEX_PAGE))
     } else {
@@ -57,13 +55,15 @@ app.use(async (ctx, next) => {
   }
 
   try {
-    const context = {url, template}
+    const context = {ctx}
     const {status, content} = await run(context)
-    ctx.status = status
-    res[status === 302 ? 'redirect' : 'end'](content)
+
+    if (status === 302) return ctx.redirect(content)
+
+    ctx.body = template.head + (context.styles || '') + template.neck + `<div id="app">${content}</div>` + template.tail
   } catch (e) {
     ctx.status = 500
-    res.end('internal server error')
+    ctx.body = 'internal server error'
     console.error(e)
   }
 })
