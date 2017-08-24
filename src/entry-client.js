@@ -2,19 +2,24 @@ import React from 'react'
 import {render} from 'react-dom'
 import {match, Router, browserHistory} from 'react-router'
 import {AppContainer} from 'react-hot-loader'
-import axios from 'axios'
 
 import createRoutes from 'routes'
 
-const renderApp = () => match({
-  history: browserHistory,
-  routes: createRoutes(axios)
-}, (error, redirectLocation, renderProps) => error || render(
-  <AppContainer>
-    <Router {...renderProps}/>
-  </AppContainer>,
-  document.getElementById('app')
-))
+const renderApp = () =>
+  match(
+    {
+      history: browserHistory,
+      routes: createRoutes()
+    },
+    (error, redirectLocation, renderProps) =>
+      error ||
+      render(
+        <AppContainer>
+          <Router {...renderProps} />
+        </AppContainer>,
+        document.getElementById('app')
+      )
+  )
 
 renderApp()
 

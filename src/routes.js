@@ -35,21 +35,41 @@ global.withStyle = (Component, style = empty, router = true) => {
       style.__inject__ && style.__inject__(this.$ssrContext)
     }
   }
+
   return router ? withRouter(WrappedComponent) : WrappedComponent
 }
 
-const resolve = (promise, callback) => promise.then(module => callback(null, module.default))
+const resolve = (promise, callback, context) =>
+  promise.then(async module => {
+    const component = module.default
 
-export default axios => ({
+    if (context) {
+      const {asyncData} = component.WrappedComponent.prototype
+      asyncData && (await asyncData(context))
+    }
+
+    callback(null, component)
+  })
+
+export default context => ({
   path: '/',
   getIndexRoute(partialNextState, callback) {
-    import('views/Home').then(module => callback(null, {component: module.default}))
+    import('views/Home').then(async module => {
+      const component = module.default
+
+      if (context) {
+        const {asyncData} = component.prototype
+        asyncData && (await asyncData(context))
+      }
+
+      callback(null, {component})
+    })
   },
   childRoutes: [
     {
       path: 'counter',
       getComponent(nextState, callback) {
-        resolve(import('views/Counter'), callback)
+        resolve(import('views/Counter'), callback, context)
       }
     }
   ]
