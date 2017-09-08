@@ -2388,7 +2388,7 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-1stg@0.0.5:
+eslint-config-1stg@^0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/eslint-config-1stg/-/eslint-config-1stg-0.0.5.tgz#16db3fdaf17f77234139e65b3e6ae365b5f26f0f"
   dependencies:
