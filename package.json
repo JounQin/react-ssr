@@ -26,7 +26,7 @@
     "pm2": "cross-env NODE_ENV=production PORT=4000 pm2 start build/bin/start.js --name=react-ssr"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.17.0",
     "bootstrap-styl": "^5.0.8",
     "classnames": "^2.2.5",
     "history": "^3.3.0",
