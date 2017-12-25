@@ -17,26 +17,26 @@ const filename = `${prodEmpty('[name].')}[${config.hashType}].js`
 
 const urlLoader = `url-loader?${JSON.stringify({
   limit: 10000,
-  name: `${prodEmpty('[name].')}[hash].[ext]`
+  name: `${prodEmpty('[name].')}[hash].[ext]`,
 })}`
 
 const cssMinimize = minimize && {
   autoprefixer: {
     add: true,
     remove: true,
-    browsers
+    browsers,
   },
   discardComments: {
-    removeAll: true
+    removeAll: true,
   },
   safe: true,
-  sourcemap: sourceMap
+  sourcemap: sourceMap,
 }
 
 const cssOptions = {
   minimize,
   sourceMap,
-  ...cssMinimize
+  ...cssMinimize,
 }
 
 export const STYLE_LOADER = 'react-style-loader'
@@ -48,7 +48,7 @@ const cssModuleOptions = {
   modules: true,
   camelCase: true,
   importLoaders: 2,
-  localIdentName
+  localIdentName,
 }
 
 export const CSS_MODULE_LOADER =
@@ -64,16 +64,16 @@ export default {
     extensions: ['.js', '.styl'],
     enforceExtension: false,
     enforceModuleExtension: false,
-    alias
+    alias,
   },
   resolveLoader: {
-    modules: [PACKAGES, NODE_MODULES]
+    modules: [PACKAGES, NODE_MODULES],
   },
   output: {
     path: paths.dist(),
     publicPath: config.publicPath,
     filename,
-    chunkFilename: filename
+    chunkFilename: filename,
   },
   devtool: devTool,
   module: {
@@ -81,34 +81,34 @@ export default {
       {
         test: /^(?!.*[/\\](app|bootstrap|theme-\w+)\.styl$).*\.styl$/,
         loader: ['react-style-loader', CSS_MODULE_LOADER, STYLUS_LOADER],
-        exclude: nodeModules
+        exclude: nodeModules,
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
         options: {
-          cacheDirectory: true
+          cacheDirectory: true,
         },
-        exclude: nodeModules
+        exclude: nodeModules,
       },
       {
         test: /\.(png|jpe?g|gif)$/,
-        loader: urlLoader + '!img-loader?minimize&progressive=true'
+        loader: urlLoader + '!img-loader?minimize&progressive=true',
       },
       {
         test: /\.(svg|woff2?|eot|ttf)$/,
-        loader: urlLoader
-      }
-    ]
+        loader: urlLoader,
+      },
+    ],
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
       minimize,
       stylus: {
         default: {
-          import: [paths.src('styles/_variables.styl')]
-        }
-      }
-    })
-  ]
+          import: [paths.src('styles/_variables.styl')],
+        },
+      },
+    }),
+  ],
 }

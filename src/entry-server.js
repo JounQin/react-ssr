@@ -22,7 +22,7 @@ export default context =>
       {
         history: createMemoryHistory(url),
         routes: createRoutes(context),
-        location: url
+        location: url,
       },
       (error, redirectLocation, renderProps) => {
         let status, content
@@ -39,6 +39,6 @@ export default context =>
 
         __DEV__ && console.log(`data pre-fetch: ${Date.now() - start}ms`)
         resolve({content, status})
-      }
+      },
     )
   })

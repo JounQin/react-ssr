@@ -31,7 +31,7 @@ const NON_SSR_PATTERN = []
 
 const DEFAULT_HEADERS = {
   'Content-Type': 'text/html',
-  Server: `koa/${koaVersion}; react/${reactVersion}`
+  Server: `koa/${koaVersion}; react/${reactVersion}`,
 }
 
 app.use(async (ctx, next) => {
@@ -76,7 +76,7 @@ if (__DEV__) {
   })
 } else {
   mfs = fs
-  run = createRunner(require(paths.dist('ssr-bundle.json')))
+  run = createRunner(require(paths.dist('ssr-server-bundle.json')))
   template = parseTemplate(fs.readFileSync(paths.dist('index.html'), 'utf-8'))
   app.use(serve('dist'))
 }
@@ -86,5 +86,5 @@ const {serverHost, serverPort} = config
 const args = [serverPort, serverHost]
 
 export default app.listen(...args, err =>
-  debug(...(err ? [err] : ['Server is now running at %s:%s.', ...args.reverse()]))
+  debug(...(err ? [err] : ['Server is now running at %s:%s.', ...args.reverse()])),
 )

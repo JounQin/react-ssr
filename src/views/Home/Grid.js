@@ -15,8 +15,8 @@ export default withStyle(
         title: PropTypes.string,
         text: PropTypes.string,
         link: PropTypes.string,
-        className: PropTypes.string
-      })
+        className: PropTypes.string,
+      }),
     }
 
     render() {
@@ -38,5 +38,5 @@ export default withStyle(
       )
     }
   },
-  classes
+  classes,
 )

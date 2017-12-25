@@ -5,5 +5,5 @@ export default withStyle(
     render() {
       return <div>Let's start a counter here!</div>
     }
-  }
+  },
 )

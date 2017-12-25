@@ -13,7 +13,7 @@ if (!__DEV__ || !proto.hasOwnProperty('$ssrContext')) {
   Object.defineProperty(proto, '$ssrContext', {
     get() {
       return this.props.router.ssrContext
-    }
+    },
   })
 }
 
@@ -22,7 +22,7 @@ if (__SERVER__) {
     Object.defineProperty(proto, '$http', {
       get() {
         return this.$ssrContext.axios
-      }
+      },
     })
   }
 } else {
@@ -70,7 +70,7 @@ export default context => ({
       path: 'counter',
       getComponent(nextState, callback) {
         resolve(import('views/Counter'), callback, context)
-      }
-    }
-  ]
+      },
+    },
+  ],
 })

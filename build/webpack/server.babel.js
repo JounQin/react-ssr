@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import BabiliPlugin from 'babili-webpack-plugin'
-import SSRPlugin from 'ssr-webpack-plugin'
+import {SSRServerPlugin} from 'ssr-webpack-plugin'
 import _debug from 'debug'
 
 import config, {globals, paths, pkg} from '../config'
@@ -21,7 +21,7 @@ const serverConfig = {
   output: {
     ...base.output,
     filename: 'server-bundle.js',
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'commonjs2',
   },
   module: {
     rules: [
@@ -29,19 +29,19 @@ const serverConfig = {
       {
         test: /[/\\](app|bootstrap)\.styl$/,
         loader: __PROD__ ? 'null-loader' : `react-style-loader!${CSS_LOADER}!${STYLUS_LOADER}`,
-        exclude: nodeModules
-      }
-    ]
+        exclude: nodeModules,
+      },
+    ],
   },
   plugins: [
     ...base.plugins,
     new webpack.DefinePlugin({
       ...globals,
-      __SERVER__: true
+      __SERVER__: true,
     }),
-    new SSRPlugin()
+    new SSRServerPlugin(),
   ],
-  externals: Object.keys(pkg.dependencies)
+  externals: Object.keys(pkg.dependencies),
 }
 
 config.minimize && serverConfig.plugins.push(new BabiliPlugin())

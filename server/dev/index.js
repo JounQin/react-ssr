@@ -7,11 +7,7 @@ import webpackHot from './webpack-hot'
 import config, {paths} from '../../build/config'
 import {clientConfig, serverConfig} from '../../build/webpack'
 
-const readFile = (fs, file) => {
-  try {
-    return fs.readFileSync(paths.dist(file), 'utf-8')
-  } catch (e) {}
-}
+const readFile = (fs, file) => fs.readFileSync(paths.dist(file), 'utf-8')
 
 export default (app, cb) => {
   let bundle, template, fs
@@ -34,7 +30,7 @@ export default (app, cb) => {
     quiet: config.quiet,
     noInfo: config.quiet,
     lazy: false,
-    stats: config.stats
+    stats: config.stats,
   })
 
   clientCompiler.plugin('done', stats => {
@@ -59,7 +55,7 @@ export default (app, cb) => {
     stats = stats.toJson()
     if (stats.errors.length) return
 
-    bundle = JSON.parse(readFile(mfs, 'ssr-bundle.json'))
+    bundle = JSON.parse(readFile(mfs, 'ssr-server-bundle.json'))
     template && ready(bundle, {template, fs})
   })
 

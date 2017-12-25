@@ -28,7 +28,7 @@ const loaderUtil = plugin =>
   plugin && minimize
     ? plugin.extract({
         fallback: STYLE_LOADER,
-        use: sourceLoaders
+        use: sourceLoaders,
       })
     : [STYLE_LOADER, ...sourceLoaders]
 
@@ -37,7 +37,7 @@ const clientConfig = {
   target: 'web',
   entry: {
     app: [paths.src('entry-client')],
-    vendors: ['regenerator-runtime/runtime', ...vendors]
+    vendors: ['regenerator-runtime/runtime', ...vendors],
   },
   module: {
     rules: [
@@ -45,25 +45,25 @@ const clientConfig = {
       {
         test: /[/\\]app\.styl$/,
         use: loaderUtil((appLoader = new ExtractTextPlugin(`${prodEmpty('app.')}[contenthash].css`))),
-        exclude: nodeModules
+        exclude: nodeModules,
       },
       {
         test: /[/\\]bootstrap\.styl$/,
         use: loaderUtil((bootstrapLoader = new ExtractTextPlugin(`${prodEmpty('bootstrap.')}[contenthash].css`))),
-        exclude: nodeModules
+        exclude: nodeModules,
       },
       {
         test: /[/\\]theme-\w+\.styl$/,
         loader: loaderUtil(),
-        exclude: nodeModules
-      }
-    ]
+        exclude: nodeModules,
+      },
+    ],
   },
   plugins: [
     ...base.plugins,
     new webpack.DefinePlugin({
       ...globals,
-      __SERVER__: false
+      __SERVER__: false,
     }),
     new webpack.optimize.CommonsChunkPlugin('vendors'),
     new webpack.optimize.CommonsChunkPlugin('manifest'),
@@ -71,17 +71,17 @@ const clientConfig = {
       templateContent: pug.renderFile(paths.src('index.pug'), {
         pretty: !minimize,
         title: `${pkg.name} - ${pkg.description}`,
-        polyfill: !__DEV__
+        polyfill: !__DEV__,
       }),
       favicon: paths.src('static/favicon.ico'),
       hash: false,
       inject: true,
       minify: {
         collapseWhitespace: minimize,
-        minifyJS: minimize
-      }
-    })
-  ]
+        minifyJS: minimize,
+      },
+    }),
+  ],
 }
 
 if (minimize) {
@@ -95,13 +95,13 @@ if (minimize) {
       compress: {
         unused: true,
         dead_code: true,
-        warnings: false
+        warnings: false,
       },
       comments: false,
-      sourceMap
+      sourceMap,
     }),
     bootstrapLoader,
-    appLoader
+    appLoader,
   )
 }
 
@@ -123,10 +123,10 @@ if (__DEV__) {
       runtimeCaching: [
         {
           urlPattern: /\//,
-          handler: 'networkFirst'
-        }
-      ]
-    })
+          handler: 'networkFirst',
+        },
+      ],
+    }),
   )
 }
 

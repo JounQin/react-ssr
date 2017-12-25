@@ -36,7 +36,7 @@ export function intercept({headers, method, url}, options = {}) {
   }
 }
 
-export function parseTemplate(template, contentPlaceholder = '<div id="app">') {
+export function parseTemplate(template, contentPlaceholder = '<div id="app"></div>') {
   if (typeof template === 'object') {
     return template
   }
@@ -58,7 +58,7 @@ export function parseTemplate(template, contentPlaceholder = '<div id="app">') {
   return {
     head: template.slice(0, i),
     neck: template.slice(i, j),
-    tail: template.slice(j + contentPlaceholder.length)
+    tail: template.slice(j + contentPlaceholder.length),
   }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {render} from 'react-dom'
+import {hydrate} from 'react-dom'
 import {match, Router, browserHistory} from 'react-router'
 import {AppContainer} from 'react-hot-loader'
 
@@ -9,16 +9,16 @@ const renderApp = () =>
   match(
     {
       history: browserHistory,
-      routes: createRoutes()
+      routes: createRoutes(),
     },
     (error, redirectLocation, renderProps) =>
       error ||
-      render(
+      hydrate(
         <AppContainer>
           <Router {...renderProps} />
         </AppContainer>,
-        document.getElementById('app')
-      )
+        document.getElementById('app'),
+      ),
   )
 
 renderApp()

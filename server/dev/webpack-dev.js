@@ -14,7 +14,7 @@ export default (compiler, middleware) => {
       },
       setHeader() {
         ctx.set(...arguments)
-      }
+      },
     })
 
     if (hasNext) {

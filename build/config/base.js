@@ -8,7 +8,7 @@ export const globals = {
   'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
   __DEV__: NODE_ENV === 'development',
   __TEST__: NODE_ENV === 'test',
-  __PROD__: NODE_ENV === 'production'
+  __PROD__: NODE_ENV === 'production',
 }
 
 export const paths = (() => {
@@ -19,7 +19,7 @@ export const paths = (() => {
     src: base.bind(null, 'src'),
     dist: base.bind(null, 'dist'),
     server: base.bind(null, 'server'),
-    test: base.bind(null, 'test')
+    test: base.bind(null, 'test'),
   }
 })()
 
@@ -35,7 +35,7 @@ export const vendors = [
   'react-redux',
   'react-router',
   'react-router-redux',
-  'redux'
+  'redux',
 ]
 
 export default {
@@ -52,7 +52,7 @@ export default {
     modules: false,
     children: false,
     chunks: false,
-    chunkModules: false
+    chunkModules: false,
   },
-  globals
+  globals,
 }
