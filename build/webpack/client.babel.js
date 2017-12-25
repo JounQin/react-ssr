@@ -99,10 +99,6 @@ const clientConfig = {
 }
 
 if (minimize) {
-  // Object.assign(clientConfig.resolve.alias, {
-  //   react: 'react-lite',
-  //   'react-dom': 'react-lite'
-  // })
   clientConfig.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       mangle: !sourceMap,

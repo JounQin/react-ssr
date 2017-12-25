@@ -1,29 +1,35 @@
 import React from 'react'
+import { AsyncComponentProvider } from 'react-async-component'
+import asyncBootstrapper from 'react-async-bootstrapper'
 import { hydrate } from 'react-dom'
-import { match, Router, browserHistory } from 'react-router'
 import { AppContainer } from 'react-hot-loader'
+import { BrowserRouter } from 'react-router-dom'
 
-import createRoutes from 'routes'
+import App from 'App'
 
-const renderApp = () =>
-  match(
-    {
-      history: browserHistory,
-      routes: createRoutes(),
-    },
-    (error, redirectLocation, renderProps) =>
-      error ||
-      hydrate(
-        <AppContainer>
-          <Router {...renderProps} />
-        </AppContainer>,
-        document.getElementById('app'),
-      ),
+const rehydrateState = window.ASYNC_COMPONENTS_STATE
+
+const render = () => {
+  const app = (
+    <AppContainer>
+      <AsyncComponentProvider rehydrateState={rehydrateState}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AsyncComponentProvider>
+    </AppContainer>
   )
 
-renderApp()
+  asyncBootstrapper(app).then(() =>
+    hydrate(app, document.getElementById('app')),
+  )
+}
 
-if (module.hot) module.hot.accept('routes', renderApp)
+render()
+
+if (module.hot) {
+  module.hot.accept('./App', render)
+}
 
 location.protocol === 'https:' &&
   navigator.serviceWorker &&

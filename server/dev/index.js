@@ -1,6 +1,7 @@
+import MFS from 'memory-fs'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
-import MFS from 'memory-fs'
+
 import webpackDev from './webpack-dev'
 import webpackHot from './webpack-hot'
 

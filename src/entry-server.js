@@ -1,12 +1,18 @@
-import React from 'react'
-import { renderToString } from 'react-dom/server'
-import { createMemoryHistory, match, RouterContext } from 'react-router'
 import _axios from 'axios'
+import React from 'react'
+import asyncBootstrapper from 'react-async-bootstrapper'
+import {
+  AsyncComponentProvider,
+  createAsyncContext,
+} from 'react-async-component'
+import { renderToString } from 'react-dom/server'
+import { StaticRouter } from 'react-router'
+import serialize from 'serialize-javascript'
 
-import createRoutes from 'routes'
+import App from 'App'
 
 export default context =>
-  new Promise((resolve, reject) => {
+  new Promise(async (resolve, reject) => {
     const start = __DEV__ && Date.now()
 
     const { ctx } = context
@@ -18,27 +24,32 @@ export default context =>
 
     Object.assign(context, { axios })
 
-    match(
-      {
-        history: createMemoryHistory(url),
-        routes: createRoutes(context),
-        location: url,
-      },
-      (error, redirectLocation, renderProps) => {
-        let status, content
+    const asyncContext = createAsyncContext()
 
-        if (error) return reject(error)
-
-        if (redirectLocation) {
-          content = redirectLocation.pathname + redirectLocation.search
-          status = 302
-        } else {
-          renderProps.router.ssrContext = context
-          content = renderToString(<RouterContext {...renderProps} />)
-        }
-
-        __DEV__ && console.log(`data pre-fetch: ${Date.now() - start}ms`)
-        resolve({ content, status })
-      },
+    const app = (
+      <AsyncComponentProvider asyncContext={asyncContext}>
+        <StaticRouter location={url} context={context}>
+          <App />
+        </StaticRouter>
+      </AsyncComponentProvider>
     )
+
+    await asyncBootstrapper(app)
+
+    let status, content
+
+    if (context.url) {
+      content = context.url
+      status = 302
+    } else {
+      content = `<div id="app">${renderToString(
+        app,
+      )}</div><script>window.ASYNC_COMPONENTS_STATE=${serialize(
+        asyncContext.getState(),
+      )}</script>`
+    }
+
+    __DEV__ && console.log(`data pre-fetch: ${Date.now() - start}ms`)
+
+    resolve({ content, status })
   })

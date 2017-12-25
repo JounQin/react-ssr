@@ -1,5 +1,5 @@
 import webpack from 'webpack'
-import BabiliPlugin from 'babili-webpack-plugin'
+import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
 import { SSRServerPlugin } from 'ssr-webpack-plugin'
 import _debug from 'debug'
 
@@ -46,6 +46,6 @@ const serverConfig = {
   externals: Object.keys(pkg.dependencies),
 }
 
-config.minimize && serverConfig.plugins.push(new BabiliPlugin())
+config.minimize && serverConfig.plugins.push(new BabelMinifyWebpackPlugin())
 
 export default serverConfig

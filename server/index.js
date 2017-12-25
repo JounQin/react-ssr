@@ -1,11 +1,11 @@
 import fs from 'fs'
 
+import _debug from 'debug'
 import Koa from 'koa'
 import compress from 'koa-compress'
 import logger from 'koa-logger'
 import serve from 'koa-static'
 import re from 'path-to-regexp'
-import _debug from 'debug'
 
 import config, { globals, paths } from '../build/config'
 
@@ -64,7 +64,7 @@ app.use(async (ctx, next) => {
       template.head +
       (context.styles || '') +
       template.neck +
-      `<div id="app">${content}</div>` +
+      content +
       template.tail
   } catch (e) {
     ctx.status = 500

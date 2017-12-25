@@ -5,7 +5,7 @@ import Grid from './Grid'
 import classes from './index.styl'
 
 export default withStyle(
-  class extends React.PureComponent {
+  class Home extends React.PureComponent {
     render() {
       return (
         <main className={classes.main}>
