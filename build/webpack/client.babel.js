@@ -5,15 +5,21 @@ import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
 import pug from 'pug'
 import _debug from 'debug'
 
-import config, {globals, paths, pkg, vendors} from '../config'
+import config, { globals, paths, pkg, vendors } from '../config'
 
-import base, {CSS_LOADER, prodEmpty, nodeModules, STYLE_LOADER, STYLUS_LOADER} from './base'
+import base, {
+  CSS_LOADER,
+  prodEmpty,
+  nodeModules,
+  STYLE_LOADER,
+  STYLUS_LOADER,
+} from './base'
 
-const {minimize, devTool} = config
+const { minimize, devTool } = config
 
 const sourceMap = !!devTool
 
-const {NODE_ENV, __DEV__} = globals
+const { NODE_ENV, __DEV__ } = globals
 
 const debug = _debug('hi:webpack:client')
 
@@ -44,12 +50,20 @@ const clientConfig = {
       ...base.module.rules,
       {
         test: /[/\\]app\.styl$/,
-        use: loaderUtil((appLoader = new ExtractTextPlugin(`${prodEmpty('app.')}[contenthash].css`))),
+        use: loaderUtil(
+          (appLoader = new ExtractTextPlugin(
+            `${prodEmpty('app.')}[contenthash].css`,
+          )),
+        ),
         exclude: nodeModules,
       },
       {
         test: /[/\\]bootstrap\.styl$/,
-        use: loaderUtil((bootstrapLoader = new ExtractTextPlugin(`${prodEmpty('bootstrap.')}[contenthash].css`))),
+        use: loaderUtil(
+          (bootstrapLoader = new ExtractTextPlugin(
+            `${prodEmpty('bootstrap.')}[contenthash].css`,
+          )),
+        ),
         exclude: nodeModules,
       },
       {
@@ -108,7 +122,10 @@ if (minimize) {
 if (__DEV__) {
   debug('Enable plugins for live development (HMR, NoErrors).')
 
-  clientConfig.plugins.push(new webpack.HotModuleReplacementPlugin(), new webpack.NoEmitOnErrorsPlugin())
+  clientConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+  )
 } else {
   debug(`Enable plugins for ${NODE_ENV} (SWPrecache).`)
 

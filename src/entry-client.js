@@ -1,7 +1,7 @@
 import React from 'react'
-import {hydrate} from 'react-dom'
-import {match, Router, browserHistory} from 'react-router'
-import {AppContainer} from 'react-hot-loader'
+import { hydrate } from 'react-dom'
+import { match, Router, browserHistory } from 'react-router'
+import { AppContainer } from 'react-hot-loader'
 
 import createRoutes from 'routes'
 
@@ -25,4 +25,6 @@ renderApp()
 
 if (module.hot) module.hot.accept('routes', renderApp)
 
-location.protocol === 'https:' && navigator.serviceWorker && navigator.serviceWorker.register('/service-worker.js')
+location.protocol === 'https:' &&
+  navigator.serviceWorker &&
+  navigator.serviceWorker.register('/service-worker.js')

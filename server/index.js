@@ -7,11 +7,11 @@ import serve from 'koa-static'
 import re from 'path-to-regexp'
 import _debug from 'debug'
 
-import config, {globals, paths} from '../build/config'
+import config, { globals, paths } from '../build/config'
 
-import {intercept, parseTemplate, createRunner} from './utils'
+import { intercept, parseTemplate, createRunner } from './utils'
 
-const {__DEV__} = globals
+const { __DEV__ } = globals
 
 const debug = _debug('hi:server')
 
@@ -37,7 +37,7 @@ const DEFAULT_HEADERS = {
 app.use(async (ctx, next) => {
   await readyPromise
 
-  if (intercept(ctx, {logger: __DEV__ && debug})) {
+  if (intercept(ctx, { logger: __DEV__ && debug })) {
     await next()
     return
   }
@@ -55,12 +55,17 @@ app.use(async (ctx, next) => {
   }
 
   try {
-    const context = {ctx}
-    const {status, content} = await run(context)
+    const context = { ctx }
+    const { status, content } = await run(context)
 
     if (status === 302) return ctx.redirect(content)
 
-    ctx.body = template.head + (context.styles || '') + template.neck + `<div id="app">${content}</div>` + template.tail
+    ctx.body =
+      template.head +
+      (context.styles || '') +
+      template.neck +
+      `<div id="app">${content}</div>` +
+      template.tail
   } catch (e) {
     ctx.status = 500
     ctx.body = 'internal server error'
@@ -69,11 +74,14 @@ app.use(async (ctx, next) => {
 })
 
 if (__DEV__) {
-  readyPromise = require('./dev').default(app, (bundle, {template: temp, fs}) => {
-    mfs = fs
-    run = createRunner(bundle)
-    template = parseTemplate(temp)
-  })
+  readyPromise = require('./dev').default(
+    app,
+    (bundle, { template: temp, fs }) => {
+      mfs = fs
+      run = createRunner(bundle)
+      template = parseTemplate(temp)
+    },
+  )
 } else {
   mfs = fs
   run = createRunner(require(paths.dist('ssr-server-bundle.json')))
@@ -81,10 +89,12 @@ if (__DEV__) {
   app.use(serve('dist'))
 }
 
-const {serverHost, serverPort} = config
+const { serverHost, serverPort } = config
 
 const args = [serverPort, serverHost]
 
 export default app.listen(...args, err =>
-  debug(...(err ? [err] : ['Server is now running at %s:%s.', ...args.reverse()])),
+  debug(
+    ...(err ? [err] : ['Server is now running at %s:%s.', ...args.reverse()]),
+  ),
 )

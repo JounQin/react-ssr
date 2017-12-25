@@ -1,5 +1,5 @@
 import React from 'react'
-import {withRouter} from 'react-router'
+import { withRouter } from 'react-router'
 import axios from 'axios'
 
 import 'styles/bootstrap'
@@ -26,7 +26,7 @@ if (__SERVER__) {
     })
   }
 } else {
-  Object.defineProperty(proto, '$http', {value: axios})
+  Object.defineProperty(proto, '$http', { value: axios })
 }
 
 global.withStyle = (Component, style = empty, router = true) => {
@@ -44,7 +44,7 @@ const resolve = (promise, callback, context) =>
     const component = module.default
 
     if (context) {
-      const {asyncData} = component.WrappedComponent.prototype
+      const { asyncData } = component.WrappedComponent.prototype
       asyncData && (await asyncData(context))
     }
 
@@ -58,11 +58,11 @@ export default context => ({
       const component = module.default
 
       if (context) {
-        const {asyncData} = component.prototype
+        const { asyncData } = component.prototype
         asyncData && (await asyncData(context))
       }
 
-      callback(null, {component})
+      callback(null, { component })
     })
   },
   childRoutes: [

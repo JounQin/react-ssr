@@ -1,11 +1,12 @@
 import runInVm from 'run-in-vm'
 
-const getLogger = ({logger, verbose}) => logger || (verbose ? console.log.bind(console) : function() {})
+const getLogger = ({ logger, verbose }) =>
+  logger || (verbose ? console.log.bind(console) : function() {})
 
-const acceptsHtml = (header, {htmlAcceptHeaders = ['text/html', '*/*']}) =>
+const acceptsHtml = (header, { htmlAcceptHeaders = ['text/html', '*/*'] }) =>
   !!htmlAcceptHeaders.find(acceptHeader => header.indexOf(acceptHeader) + 1)
 
-export function intercept({headers, method, url}, options = {}) {
+export function intercept({ headers, method, url }, options = {}) {
   const logger = getLogger(options)
 
   if (method !== 'GET') {
@@ -14,7 +15,12 @@ export function intercept({headers, method, url}, options = {}) {
   }
 
   if (!headers || typeof headers.accept !== 'string') {
-    logger('Not intercepting', method, url, 'because the client did not send an HTTP accept header.')
+    logger(
+      'Not intercepting',
+      method,
+      url,
+      'because the client did not send an HTTP accept header.',
+    )
     return true
   }
 
@@ -24,19 +30,32 @@ export function intercept({headers, method, url}, options = {}) {
   }
 
   if (!acceptsHtml(headers.accept, options)) {
-    logger('Not intercepting', method, url, 'because the client does not accept HTML.')
+    logger(
+      'Not intercepting',
+      method,
+      url,
+      'because the client does not accept HTML.',
+    )
     return true
   }
 
   const parsedUrl = require('url').parse(url)
 
   if (parsedUrl.pathname.indexOf('.') + 1 && !options.disableDotRule) {
-    logger('Not intercepting', method, url, 'because the path includes a dot (.) character.')
+    logger(
+      'Not intercepting',
+      method,
+      url,
+      'because the path includes a dot (.) character.',
+    )
     return true
   }
 }
 
-export function parseTemplate(template, contentPlaceholder = '<div id="app"></div>') {
+export function parseTemplate(
+  template,
+  contentPlaceholder = '<div id="app"></div>',
+) {
   if (typeof template === 'object') {
     return template
   }
@@ -62,4 +81,5 @@ export function parseTemplate(template, contentPlaceholder = '<div id="app"></di
   }
 }
 
-export const createRunner = bundle => runInVm({bundle, runInNewContext: false})
+export const createRunner = bundle =>
+  runInVm({ bundle, runInNewContext: false })

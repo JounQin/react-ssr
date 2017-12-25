@@ -1,13 +1,13 @@
 import webpack from 'webpack'
 
-import config, {alias, globals, paths} from '../config'
+import config, { alias, globals, paths } from '../config'
 
-const {__PROD__} = globals
+const { __PROD__ } = globals
 
 const PACKAGES = paths.base('packages')
 const NODE_MODULES = 'node_modules'
 
-const {browsers, devTool, minimize} = config
+const { browsers, devTool, minimize } = config
 
 const sourceMap = !!devTool
 
@@ -42,7 +42,9 @@ const cssOptions = {
 export const STYLE_LOADER = 'react-style-loader'
 
 export const CSS_LOADER = 'css-loader?' + JSON.stringify(cssOptions)
-export const localIdentName = __PROD__ ? '[hash:base64]' : '[name]__[local]___[hash:base64:5]'
+export const localIdentName = __PROD__
+  ? '[hash:base64]'
+  : '[name]__[local]___[hash:base64:5]'
 
 const cssModuleOptions = {
   modules: true,
@@ -52,7 +54,8 @@ const cssModuleOptions = {
 }
 
 export const CSS_MODULE_LOADER =
-  'css-loader?' + JSON.stringify(Object.assign({react: true}, cssOptions, cssModuleOptions))
+  'css-loader?' +
+  JSON.stringify(Object.assign({ react: true }, cssOptions, cssModuleOptions))
 
 export const nodeModules = /\bnode_modules\b/
 

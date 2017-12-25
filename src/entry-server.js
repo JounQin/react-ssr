@@ -1,6 +1,6 @@
 import React from 'react'
-import {renderToString} from 'react-dom/server'
-import {createMemoryHistory, match, RouterContext} from 'react-router'
+import { renderToString } from 'react-dom/server'
+import { createMemoryHistory, match, RouterContext } from 'react-router'
 import _axios from 'axios'
 
 import createRoutes from 'routes'
@@ -9,14 +9,14 @@ export default context =>
   new Promise((resolve, reject) => {
     const start = __DEV__ && Date.now()
 
-    const {ctx} = context
-    const {url} = ctx
+    const { ctx } = context
+    const { url } = ctx
 
     const axios = _axios.create()
 
     axios.defaults.headers = ctx.headers
 
-    Object.assign(context, {axios})
+    Object.assign(context, { axios })
 
     match(
       {
@@ -38,7 +38,7 @@ export default context =>
         }
 
         __DEV__ && console.log(`data pre-fetch: ${Date.now() - start}ms`)
-        resolve({content, status})
+        resolve({ content, status })
       },
     )
   })

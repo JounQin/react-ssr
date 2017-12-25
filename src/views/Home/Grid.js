@@ -20,9 +20,13 @@ export default withStyle(
     }
 
     render() {
-      const {title, text, link, className} = this.props.info
+      const { title, text, link, className } = this.props.info
       return (
-        <Link to={link} className={classNames([classes.grid, classes[className]])} target="_blank">
+        <Link
+          to={link}
+          className={classNames([classes.grid, classes[className]])}
+          target="_blank"
+        >
           <div className={classNames([classes.border, classes.borderT])} />
           <div className={classNames([classes.border, classes.borderR])} />
           <div className={classNames([classes.border, classes.borderB])} />

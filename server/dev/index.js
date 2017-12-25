@@ -4,8 +4,8 @@ import MFS from 'memory-fs'
 import webpackDev from './webpack-dev'
 import webpackHot from './webpack-hot'
 
-import config, {paths} from '../../build/config'
-import {clientConfig, serverConfig} from '../../build/webpack'
+import config, { paths } from '../../build/config'
+import { clientConfig, serverConfig } from '../../build/webpack'
 
 const readFile = (fs, file) => fs.readFileSync(paths.dist(file), 'utf-8')
 
@@ -20,7 +20,10 @@ export default (app, cb) => {
     cb(...args)
   }
 
-  clientConfig.entry.app.unshift('react-hot-loader/patch', 'webpack-hot-middleware/client')
+  clientConfig.entry.app.unshift(
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client',
+  )
 
   const clientCompiler = webpack(clientConfig)
 
@@ -41,7 +44,7 @@ export default (app, cb) => {
 
     fs = devMiddleware.fileSystem
     template = readFile(fs, 'index.html')
-    bundle && ready(bundle, {template, fs})
+    bundle && ready(bundle, { template, fs })
   })
 
   app.use(webpackDev(clientCompiler, devMiddleware))
@@ -56,7 +59,7 @@ export default (app, cb) => {
     if (stats.errors.length) return
 
     bundle = JSON.parse(readFile(mfs, 'ssr-server-bundle.json'))
-    template && ready(bundle, {template, fs})
+    template && ready(bundle, { template, fs })
   })
 
   return readyPromise

@@ -1,13 +1,13 @@
 import webpack from 'webpack'
 import BabiliPlugin from 'babili-webpack-plugin'
-import {SSRServerPlugin} from 'ssr-webpack-plugin'
+import { SSRServerPlugin } from 'ssr-webpack-plugin'
 import _debug from 'debug'
 
-import config, {globals, paths, pkg} from '../config'
+import config, { globals, paths, pkg } from '../config'
 
-import base, {nodeModules, CSS_LOADER, STYLUS_LOADER} from './base'
+import base, { nodeModules, CSS_LOADER, STYLUS_LOADER } from './base'
 
-const {NODE_ENV, __PROD__} = globals
+const { NODE_ENV, __PROD__ } = globals
 
 const debug = _debug('hi:webpack:server')
 
@@ -28,7 +28,9 @@ const serverConfig = {
       ...base.module.rules,
       {
         test: /[/\\](app|bootstrap)\.styl$/,
-        loader: __PROD__ ? 'null-loader' : `react-style-loader!${CSS_LOADER}!${STYLUS_LOADER}`,
+        loader: __PROD__
+          ? 'null-loader'
+          : `react-style-loader!${CSS_LOADER}!${STYLUS_LOADER}`,
         exclude: nodeModules,
       },
     ],
