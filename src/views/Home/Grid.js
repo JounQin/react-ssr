@@ -4,11 +4,13 @@ import classNames from 'classnames'
 
 import Link from 'components/Link'
 
+import { withSsr } from 'utils'
+
 import classes from './grid.styl'
 
 import github from './github.png'
 
-export default withStyle(
+export default withSsr(classes)(
   class extends React.PureComponent {
     static propTypes = {
       info: PropTypes.shape({
@@ -42,5 +44,4 @@ export default withStyle(
       )
     }
   },
-  classes,
 )

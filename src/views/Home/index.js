@@ -1,10 +1,12 @@
 import React from 'react'
 
+import { withSsr } from 'utils'
+
 import Grid from './Grid'
 
 import classes from './index.styl'
 
-export default withStyle(
+export default withSsr(classes, false)(
   class Home extends React.PureComponent {
     render() {
       return (
@@ -38,6 +40,4 @@ export default withStyle(
       )
     }
   },
-  classes,
-  false,
 )
