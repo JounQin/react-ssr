@@ -1,30 +1,59 @@
-import axios from 'axios'
 import hoistStatics from 'hoist-non-react-statics'
+import PropTypes from 'prop-types'
 import React from 'react'
 import { withRouter } from 'react-router'
 
-import empty from 'styles/_empty'
+export const withSsr = (styles, router = true, title) => {
+  if (typeof router !== 'boolean') {
+    title = router
+    router = true
+  }
 
-export const withSsr = (styles = empty, router = true) => Component => {
-  class WrappedComponent extends React.PureComponent {
-    componentWillMount() {
-      if (styles && styles.__inject__) {
-        styles.__inject__(this.props.staticContext)
+  return Component => {
+    class SsrConmponent extends React.PureComponent {
+      static displayName = `Ssr${Component.displayName ||
+        Component.name ||
+        'Component'}`
+
+      static propTypes = {
+        staticContext: PropTypes.object,
+      }
+
+      setTitle() {
+        const t = typeof title === 'function' ? title.call(this, this) : title
+
+        if (!t) {
+          return
+        }
+
+        if (__SERVER__) {
+          this.props.staticContext.title = `React Hackernews | ${t}`
+          return
+        }
+
+        Promise.resolve(t).then(title => {
+          if (title) {
+            document.title = `React Hackernews | ${title}`
+          }
+        })
+      }
+
+      componentWillMount() {
+        if (styles.__inject__) {
+          styles.__inject__(this.props.staticContext)
+        }
+
+        this.setTitle()
+      }
+
+      render() {
+        return <Component {...this.props} />
       }
     }
 
-    render() {
-      return (
-        <Component
-          {...this.props}
-          http={__SERVER__ ? this.props.staticContext.axios : axios}
-        />
-      )
-    }
+    return hoistStatics(
+      router ? withRouter(SsrConmponent) : SsrConmponent,
+      Component,
+    )
   }
-
-  return hoistStatics(
-    router ? withRouter(WrappedComponent) : WrappedComponent,
-    Component,
-  )
 }

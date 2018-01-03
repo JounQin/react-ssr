@@ -11,5 +11,6 @@ before_script: greenkeeper-lockfile-update
 script:
   - yarn lint
   - yarn build
+  - 'if [[ $TRAVIS_BRANCH = "master" && "$TRAVIS_PULL_REQUEST" = "false" ]]; then yarn sync:push; fi'
 
 after_script: greenkeeper-lockfile-upload

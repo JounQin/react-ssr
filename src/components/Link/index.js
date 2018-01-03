@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link as RouterLink } from 'react-router-dom'
 
-export default class extends React.PureComponent {
+export default class Link extends React.PureComponent {
   static propTypes = { to: PropTypes.string, children: PropTypes.any }
 
   render() {
