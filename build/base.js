@@ -89,12 +89,12 @@ export default {
   module: {
     rules: [
       {
-        test: /\.png$/,
+        test: /\.webp$/,
         use: [
           {
             loader: 'url-loader',
             options: {
-              limit: 10000,
+              limit: 1024 * 8,
             },
           },
           'img-loader',
