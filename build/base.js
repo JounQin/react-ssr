@@ -80,16 +80,13 @@ export const babelLoader = isServer => ({
 export default {
   devtool: __DEV__ && 'cheap-module-source-map',
   resolve: {
-    alias: {
-      lodash: 'lodash-es',
-    },
     extensions: ['.js', '.scss'],
     modules: [resolve('src'), 'node_modules'],
   },
   module: {
     rules: [
       {
-        test: /\.webp$/,
+        test: /\.(png|webp)$/,
         use: [
           {
             loader: 'url-loader',
