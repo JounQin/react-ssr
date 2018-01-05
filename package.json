@@ -17,7 +17,8 @@
     "sync:pull": "bash build/sync-pull.sh",
     "sync:push": "bash build/sync-push.sh",
     "lint": "eslint . --max-warnings=10",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prune": "yarn install --production --ignore-optional --ignore-scripts --prefer-offline --force"
   },
   "babel": {
     "presets": ["@babel/env", "@babel/stage-0"]
@@ -55,6 +56,7 @@
     ]
   },
   "dependencies": {
+    "anujs": "^1.2.3",
     "classnames": "^2.2.5",
     "cross-env": "^5.1.3",
     "debug": "^3.1.0",
@@ -66,10 +68,8 @@
     "koa-logger": "^3.1.0",
     "koa-static-cache": "^5.1.1",
     "lru-cache": "^4.1.1",
-    "react": "^16.2.0",
     "react-async-bootstrapper": "^1.1.2",
     "react-async-component": "^1.0.2",
-    "react-dom": "^16.2.0",
     "react-router": "^4.2.0",
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.2.2",
@@ -111,6 +111,8 @@
     "prop-types": "^15.6.0",
     "pug": "^2.0.0-rc.4",
     "pug-loader": "^2.3.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-hot-loader": "^4.0.0-beta.12",
     "react-style-loader": "^2.2.0",
     "rimraf": "^2.6.2",

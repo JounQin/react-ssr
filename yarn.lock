@@ -855,6 +855,10 @@ ansi-wrap@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/ansi-wrap/-/ansi-wrap-0.1.0.tgz#a82250ddb0015e9a27ca82e82ea603bbfa45efaf"
 
+anujs@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/anujs/-/anujs-1.2.3.tgz#3be477c901af70007b40b6ef36de16e718115836"
+
 any-observable@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/any-observable/-/any-observable-0.2.0.tgz#c67870058003579009083f54ac0abafb5c33d242"
