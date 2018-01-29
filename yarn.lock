@@ -6021,12 +6021,6 @@ react-stand-in@4.0.0-beta.13, react-stand-in@^4.0.0-beta.18:
   dependencies:
     shallowequal "^1.0.2"
 
-react-stand-in@4.0.0-beta.14:
-  version "4.0.0-beta.14"
-  resolved "https://registry.yarnpkg.com/react-stand-in/-/react-stand-in-4.0.0-beta.14.tgz#0a06a94b44bc4ca1d06575414acf400585d84e35"
-  dependencies:
-    shallowequal "^1.0.2"
-
 react-style-loader@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/react-style-loader/-/react-style-loader-2.3.0.tgz#33df91746b2c1ee78fe00601a436d0a6ec193640"
