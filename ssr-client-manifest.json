@@ -7,19 +7,19 @@
     "33d4621bd64b922a6e264452e728252a.png",
     "a17bc536975754484b0223e44edadbb1.png",
     "c3900649b8bdee25786b069ce0bea995.webp",
-    "0.d290b8ea923c44f033a0.js",
+    "0.070ccbabc7562164f95a.js",
     "vendors.cde506236102f0eef428.js",
     "app.4cfd6bc841b6f936c5bf.js",
-    "manifest.a8ce949a024c9179e823.js",
+    "manifest.e20c25f67298811a7fbe.js",
     "app.5357280b9b0188d02dbef3984bc2511d.css"
   ],
   "initial": [
-    "manifest.a8ce949a024c9179e823.js",
+    "manifest.e20c25f67298811a7fbe.js",
     "vendors.cde506236102f0eef428.js",
     "app.4cfd6bc841b6f936c5bf.js"
   ],
   "async": [
-    "0.d290b8ea923c44f033a0.js"
+    "0.070ccbabc7562164f95a.js"
   ],
   "modules": {
     "11048425": [
