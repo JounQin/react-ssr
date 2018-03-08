@@ -13,19 +13,13 @@ if (!__DEV__) {
   delete window.ASYNC_COMPONENTS_STATE
 }
 
-const AppContainer = __DEV__
-  ? require('react-hot-loader').AppContainer
-  : ({ children }) => children
-
 const render = () => {
   const app = (
-    <AppContainer>
-      <AsyncComponentProvider rehydrateState={rehydrateState}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </AsyncComponentProvider>
-    </AppContainer>
+    <AsyncComponentProvider rehydrateState={rehydrateState}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AsyncComponentProvider>
   )
 
   asyncBootstrapper(app).then(() =>

@@ -1,8 +1,6 @@
 import webpack from 'webpack'
 import ExtractTextWebpackPlugin from 'extract-text-webpack-plugin'
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
-import px2rem from 'postcss-plugin-px2rem'
-import UglifyjsWebpackPlugin from 'uglifyjs-webpack-plugin'
 
 import { NODE_ENV, __DEV__, resolve } from './config'
 
@@ -34,20 +32,12 @@ const cssLoaders = react =>
       {
         loader: 'postcss-loader',
         options: {
-          minimize,
           souceMap,
-          plugins: [
-            px2rem({
-              rootValue: 16,
-              selectorBlackList: ['html'],
-            }),
-          ],
         },
       },
       {
         loader: 'sass-loader',
         options: {
-          minimize,
           souceMap,
         },
       },
@@ -78,6 +68,7 @@ export const babelLoader = isServer => ({
 })
 
 export default {
+  mode: NODE_ENV,
   devtool: __DEV__ && 'cheap-module-source-map',
   resolve: {
     alias: {
@@ -130,24 +121,14 @@ export default {
     ],
   },
   plugins: [
-    new webpack.LoaderOptionsPlugin({
-      context: __dirname,
-    }),
     new ExtractTextWebpackPlugin({
       disable: __DEV__,
+      allChunks: true,
       filename: '[name].[contenthash].css',
     }),
     new FriendlyErrorsWebpackPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
       __DEV__,
     }),
-    ...(__DEV__
-      ? [new webpack.NamedModulesPlugin(), new webpack.NamedChunksPlugin()]
-      : [
-          new UglifyjsWebpackPlugin(),
-          new webpack.NoEmitOnErrorsPlugin(),
-          new webpack.optimize.ModuleConcatenationPlugin(),
-        ]),
   ],
 }
