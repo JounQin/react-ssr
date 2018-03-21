@@ -9,7 +9,7 @@
     "483a01371276fca4bd70a765d17c0cb4.webp",
     "a17bc536975754484b0223e44edadbb1.png",
     "manifest.b200fa714f2870242211.js",
-    "vendors.b69ba0c24e380bc810c7.js",
+    "vendors.65967c03a0c428111470.js",
     "app.256e5bc7b8361c0fe23e.js",
     "app.7df54763e0263af086ec99c49294776f.css",
     "vendors.9413e441841ea98f4577e319971148a4.css",
@@ -17,7 +17,7 @@
   ],
   "initial": [
     "manifest.b200fa714f2870242211.js",
-    "vendors.b69ba0c24e380bc810c7.js",
+    "vendors.65967c03a0c428111470.js",
     "app.256e5bc7b8361c0fe23e.js"
   ],
   "async": [
@@ -25,10 +25,6 @@
   ],
   "modules": {
     "11048425": [
-      8,
-      11
-    ],
-    "52913074": [
       8,
       11
     ],
@@ -160,6 +156,10 @@
       8,
       11
     ],
+    "bc3fbb8c": [
+      8,
+      11
+    ],
     "75aa801b": [
       9,
       10
@@ -172,7 +172,7 @@
       8,
       11
     ],
-    "974bf5be": [
+    "43e9fe6a": [
       8,
       11
     ],
