@@ -9,29 +9,21 @@
     "483a01371276fca4bd70a765d17c0cb4.webp",
     "a17bc536975754484b0223e44edadbb1.png",
     "manifest.b200fa714f2870242211.js",
-    "vendors.65967c03a0c428111470.js",
-    "app.256e5bc7b8361c0fe23e.js",
+    "vendors.0ff62601aa9af42a3bf0.js",
+    "app.4bad6d391fe1b3a7d35f.js",
     "app.7df54763e0263af086ec99c49294776f.css",
     "vendors.9413e441841ea98f4577e319971148a4.css",
     "manifest.9413e441841ea98f4577e319971148a4.css"
   ],
   "initial": [
     "manifest.b200fa714f2870242211.js",
-    "vendors.65967c03a0c428111470.js",
-    "app.256e5bc7b8361c0fe23e.js"
+    "vendors.0ff62601aa9af42a3bf0.js",
+    "app.4bad6d391fe1b3a7d35f.js"
   ],
   "async": [
     "0.f66fdb780d397a8863fb.js"
   ],
   "modules": {
-    "11048425": [
-      8,
-      11
-    ],
-    "61495662": [
-      8,
-      11
-    ],
     "25cd383c": [
       8,
       11
@@ -100,7 +92,7 @@
       8,
       11
     ],
-    "6c67e988": [
+    "2162214a": [
       8,
       11
     ],
@@ -173,10 +165,6 @@
       11
     ],
     "43e9fe6a": [
-      8,
-      11
-    ],
-    "03103b9a": [
       8,
       11
     ],
