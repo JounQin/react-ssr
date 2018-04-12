@@ -13,7 +13,7 @@ export default merge.smart(base, {
   output: {
     publicPath,
     path: resolve('dist'),
-    filename: `[name].[chunkhash].js`,
+    filename: `[name].[contenthash].js`,
     libraryTarget: 'commonjs2',
   },
   externals: nodeExternals({

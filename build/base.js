@@ -1,48 +1,47 @@
 import webpack from 'webpack'
-import ExtractTextWebpackPlugin from 'extract-text-webpack-plugin'
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
-import { NODE_ENV, __DEV__, resolve } from './config'
+import { NODE_ENV, __DEV__, hashType, resolve } from './config'
 
 const souceMap = __DEV__
 const minimize = !souceMap
 
-const cssLoaders = react =>
-  ExtractTextWebpackPlugin.extract({
-    fallback: {
-      loader: 'react-style-loader',
-      options: {
-        manualInject: react,
-      },
+const cssLoaders = react => [
+  react
+    ? {
+        loader: 'react-style-loader',
+        options: {
+          manualInject: react,
+        },
+      }
+    : MiniCssExtractPlugin.loader,
+  {
+    loader: 'css-loader',
+    options: {
+      minimize,
+      souceMap,
+      modules: react,
+      camelCase: true,
+      importLoaders: 2,
+      localIdentName: __DEV__
+        ? '[path][name]__[local]--[hash:base64:5]'
+        : '[hash:base64:5]',
     },
-    use: [
-      {
-        loader: 'css-loader',
-        options: {
-          minimize,
-          souceMap,
-          modules: react,
-          camelCase: true,
-          importLoaders: 2,
-          localIdentName: __DEV__
-            ? '[path][name]__[local]--[hash:base64:5]'
-            : '[hash:base64:5]',
-        },
-      },
-      {
-        loader: 'postcss-loader',
-        options: {
-          souceMap,
-        },
-      },
-      {
-        loader: 'sass-loader',
-        options: {
-          souceMap,
-        },
-      },
-    ],
-  })
+  },
+  {
+    loader: 'postcss-loader',
+    options: {
+      souceMap,
+    },
+  },
+  {
+    loader: 'sass-loader',
+    options: {
+      souceMap,
+    },
+  },
+]
 
 export const babelLoader = isServer => ({
   test: /\.js$/,
@@ -113,7 +112,6 @@ export default {
             use: cssLoaders(),
           },
           {
-            test: /./,
             use: cssLoaders(true),
           },
         ],
@@ -121,10 +119,8 @@ export default {
     ],
   },
   plugins: [
-    new ExtractTextWebpackPlugin({
-      disable: __DEV__,
-      allChunks: true,
-      filename: '[name].[contenthash].css',
+    new MiniCssExtractPlugin({
+      filename: `[name].[${hashType}].css`,
     }),
     new FriendlyErrorsWebpackPlugin(),
     new webpack.DefinePlugin({
