@@ -2,25 +2,25 @@
   "publicPath": "/",
   "all": [
     "483a01371276fca4bd70a765d17c0cb4.webp",
-    "62da0212dc04dba919c19b48bd8c074a.png",
-    "33d4621bd64b922a6e264452e728252a.png",
+    "16ad910f3d3171709578bba73842b646.png",
+    "e9828a84ebaa1d7bfaf9745e9b04da95.png",
     "9cb2f6833162058ea9a2f33dd4739e57.webp",
     "c3900649b8bdee25786b069ce0bea995.webp",
-    "a17bc536975754484b0223e44edadbb1.png",
-    "0.4e7e758c4cddfb070ce9.js",
-    "manifest.56634cc320bfa3c5d734.js",
-    "vendors.fd6ae0aeb615860b403c.js",
+    "45a96fbe2951b5928eb5ee8c1dd5a063.png",
+    "0.baee448670019cc70aa2.js",
+    "manifest.848cbffea53e2a6501c0.js",
+    "vendors.9e78c2094949ad622ec6.js",
     "app.6e0af063ce13e4718f33.css",
-    "app.8fc6ede1b2db52be8eae.js"
+    "app.ac8f66baca5b7cab6563.js"
   ],
   "initial": [
-    "manifest.56634cc320bfa3c5d734.js",
-    "vendors.fd6ae0aeb615860b403c.js",
+    "manifest.848cbffea53e2a6501c0.js",
+    "vendors.9e78c2094949ad622ec6.js",
     "app.6e0af063ce13e4718f33.css",
-    "app.8fc6ede1b2db52be8eae.js"
+    "app.ac8f66baca5b7cab6563.js"
   ],
   "async": [
-    "0.4e7e758c4cddfb070ce9.js"
+    "0.baee448670019cc70aa2.js"
   ],
   "modules": {
     "535ee7de": [
@@ -135,6 +135,9 @@
       8
     ],
     "43e9fe6a": [
+      8
+    ],
+    "5d0239af": [
       8
     ],
     "35862eef": [
