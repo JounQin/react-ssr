@@ -4,8 +4,8 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 import { NODE_ENV, __DEV__, hashType, resolve } from './config'
 
-const souceMap = __DEV__
-const minimize = !souceMap
+const sourceMap = __DEV__
+const minimize = !sourceMap
 
 const cssLoaders = react => [
   react
@@ -20,7 +20,7 @@ const cssLoaders = react => [
     loader: 'css-loader',
     options: {
       minimize,
-      souceMap,
+      sourceMap,
       modules: react,
       camelCase: true,
       importLoaders: 2,
@@ -32,13 +32,13 @@ const cssLoaders = react => [
   {
     loader: 'postcss-loader',
     options: {
-      souceMap,
+      sourceMap,
     },
   },
   {
     loader: 'sass-loader',
     options: {
-      souceMap,
+      sourceMap,
     },
   },
 ]

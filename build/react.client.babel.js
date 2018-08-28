@@ -27,8 +27,10 @@ const clientConfig = merge.smart(base, {
       chunks: 'initial',
       name: 'vendors',
       cacheGroups: {
-        test: ({ context, request }) =>
-          /node_modules/.test(context) && !/\.css$/.test(request),
+        vendors: {
+          test: ({ context, request }) =>
+            /node_modules/.test(context) && !/\.css$/.test(request),
+        },
       },
     },
   },
