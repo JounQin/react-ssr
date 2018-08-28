@@ -7,20 +7,20 @@
     "e9828a84ebaa1d7bfaf9745e9b04da95.png",
     "45a96fbe2951b5928eb5ee8c1dd5a063.png",
     "c3900649b8bdee25786b069ce0bea995.webp",
-    "app.84e51f0e00ad7f47459d.css",
+    "app.3f7a580ad6a8ff6fd316.css",
     "app.bc04fc2155f306886e75.js",
-    "1.f92ca5fdf5efd403b0e8.js",
+    "1.6ffaff0493da0c4fb3a2.js",
     "vendors.1ab050ebc1bd337ac1d1.js",
-    "manifest.f22d967df3283957a55a.js"
+    "manifest.2219fc8d94215acac0ee.js"
   ],
   "initial": [
-    "manifest.f22d967df3283957a55a.js",
+    "manifest.2219fc8d94215acac0ee.js",
     "vendors.1ab050ebc1bd337ac1d1.js",
-    "app.84e51f0e00ad7f47459d.css",
+    "app.3f7a580ad6a8ff6fd316.css",
     "app.bc04fc2155f306886e75.js"
   ],
   "async": [
-    "1.f92ca5fdf5efd403b0e8.js"
+    "1.6ffaff0493da0c4fb3a2.js"
   ],
   "modules": {
     "25cd383c": [
