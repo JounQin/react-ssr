@@ -1,5 +1,7 @@
+import glob from 'glob'
 import webpack from 'webpack'
 import merge from 'webpack-merge'
+import PurgecssWebpackPlugin from 'purgecss-webpack-plugin'
 import { SSRClientPlugin } from 'ssr-webpack-plugin'
 import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
 
@@ -47,6 +49,12 @@ const clientConfig = merge.smart(base, {
 
 if (!__DEV__) {
   clientConfig.plugins.push(
+    new PurgecssWebpackPlugin({
+      paths: [
+        ...glob.sync(`${resolve('src')}/**/*`, { nodir: true }),
+        resolve('server/template.pug'),
+      ],
+    }),
     // auto generate service worker
     new SWPrecacheWebpackPlugin({
       cacheId: 'react-ssr',
