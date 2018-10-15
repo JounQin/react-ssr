@@ -115,9 +115,11 @@ if (__DEV__) {
   webpackMiddlewarePromise.then(webpackMiddleware => app.use(webpackMiddleware))
 } else {
   renderer = createRenderer(
-    runtimeRequire(resolve('dist/ssr-server-bundle.json')),
+    runtimeRequire(resolve('dist/react-ssr-server-bundle.json')),
     {
-      clientManifest: runtimeRequire(resolve('dist/ssr-client-manifest.json')),
+      clientManifest: runtimeRequire(
+        resolve('dist/react-ssr-client-manifest.json'),
+      ),
     },
   )
 
