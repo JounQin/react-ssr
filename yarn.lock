@@ -5850,11 +5850,13 @@ react-router@^4.3.1:
     prop-types "^15.6.1"
     warning "^4.0.1"
 
-react-server-renderer@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/react-server-renderer/-/react-server-renderer-0.3.0.tgz#90e747be4a5da1a663eae46b6186615624cbeb52"
+react-server-renderer@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-server-renderer/-/react-server-renderer-1.0.0.tgz#fea1ddf0b13899d8ceede7b1ba75bef704499205"
   dependencies:
+    hash-sum "^1.0.2"
     lodash "^4.17.11"
+    lodash.uniq "^4.5.0"
     resolve "^1.8.1"
     serialize-javascript "^1.5.0"
     source-map "^0.7.0"
