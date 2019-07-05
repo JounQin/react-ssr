@@ -73,7 +73,7 @@
     "anujs": "^1.4.8",
     "classnames": "^2.2.6",
     "cross-env": "^5.2.0",
-    "debug": "^4.1.0",
+    "debug": "^4.1.1",
     "koa": "^2.5.3",
     "koa-cash": "^2.2.0",
     "koa-compose": "^4.1.0",
