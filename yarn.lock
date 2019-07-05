@@ -6453,10 +6453,10 @@ postcss-ordered-values@^4.1.1:
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
 
-postcss-plugin-px2rem@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/postcss-plugin-px2rem/-/postcss-plugin-px2rem-0.7.0.tgz#5178cf64d2dc62e98d48d1ccfd053ee4a00e2545"
-  integrity sha1-UXjPZNLcYumNSNHM/QU+5KAOJUU=
+postcss-plugin-px2rem@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/postcss-plugin-px2rem/-/postcss-plugin-px2rem-0.8.1.tgz#e8adf28fd2befbc079a119126b5c62a88905d5e1"
+  integrity sha512-gNxhrnR57pnGrPLLqVNWY9+BWgj46kYkphw+0gpRJf9tjgwI7/tLqQPK7KdlksB2SSAddOb11otDVwri8b8mXw==
   dependencies:
     postcss "^5.0.21"
 
