@@ -93,7 +93,7 @@
     "serialize-javascript": "^1.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
+    "@babel/core": "^7.5.0",
     "@babel/node": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
